@@ -77,7 +77,7 @@ def GCDSet(F, f, h):
 def Root(F, a):
 	#2-root of a, x^2=a => x = a^(N/2)
 	N = 2**F.n
-	return FPow(F, a, N / 2)
+	return FPow(F, a, int(N / 2))
 	
 
 def PolynomPRoot(F, f):
@@ -85,7 +85,7 @@ def PolynomPRoot(F, f):
 		if not f.c[i] == FElement(F, 0):
 			t = Root(F, f.c[i])
 			f.c[i] = FElement(F, 0)
-			f.c[i / 2] = t
+			f.c[int (i / 2)] = t
 	f.Correct()
 	return f
 	
