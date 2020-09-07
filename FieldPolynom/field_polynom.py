@@ -165,7 +165,7 @@ class FPolynom:
 	def __mul__(self, other):
 		return FPolynom(self.field, PolynomMul(self.field, self.c, other.c), True)
 
-	def __div__(self, other):
+	def __truediv__(self, other):
 		(divisor, rest) = PolynomDiv(self.field, self.c, other.c)  # x / y
 		return FPolynom(self.field, divisor, True)
 		
@@ -273,7 +273,7 @@ class FPolynom:
 	def Reduce(self):
 		N = 2**self.field.n
 		for i in range(N, len(self.c)):
-			j = (i / N + i % N) % N
+			j = int ((i / N + i % N) % N)
 			if (j == 0):
 				j = 1
 			self.c[j] += self.c[i]

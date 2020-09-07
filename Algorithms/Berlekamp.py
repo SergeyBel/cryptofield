@@ -34,23 +34,23 @@ def RandomTest():
 	n = 1000
 	deg = 4
 	for i in range(n):
-		print "i = ", i
+		print("i = ", i)
 		f = RandomFPolynom(F, deg)
 		ft = f.Copy()
-		print "f = ", f
+		print("f = ", f)
 		k = Berlekamp(F, f)
 		y = FPolynom(F, [1])
 		for t in k:
 			y = y * t
 		if not y == ft:
-			print "Error"
-			print "Factors"
+			print("Error")
+			print("Factors")
 			for m in k:
-				print m
-			print "Y = ", y, y.c
+				print(m)
+			print("Y = ", y, y.c)
 			return
 		else:
-			print len(k)
+			print(len(k))
 			
 	
 
@@ -77,7 +77,7 @@ def GCDSet(F, f, h):
 def Root(F, a):
 	#2-root of a, x^2=a => x = a^(N/2)
 	N = 2**F.n
-	return FPow(F, a, N / 2)
+	return FPow(F, a, int(N / 2))
 	
 
 def PolynomPRoot(F, f):
@@ -85,7 +85,7 @@ def PolynomPRoot(F, f):
 		if not f.c[i] == FElement(F, 0):
 			t = Root(F, f.c[i])
 			f.c[i] = FElement(F, 0)
-			f.c[i / 2] = t
+			f.c[int (i / 2)] = t
 	f.Correct()
 	return f
 	

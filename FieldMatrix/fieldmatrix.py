@@ -123,10 +123,12 @@ class FMatrix:
 				return False
 		return True
 		
-	def __setitem__ (self, (x,y), data):
+	def __setitem__ (self, xxx_todo_changeme, data):
+		(x,y) = xxx_todo_changeme
 		self.matrix[x, y] = data
 
-	def __getitem__ (self, (x,y)):
+	def __getitem__ (self, xxx_todo_changeme1):
+		(x,y) = xxx_todo_changeme1
 		return self.matrix[x, y]
 		
 	def __str__(self):

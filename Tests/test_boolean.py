@@ -10,21 +10,21 @@ class TestBoolean(unittest.TestCase):
     f = "0011"
     ans = "0010"
     pol = ZhegalkinPolynom(f)
-    self.assertEquals(ans, pol)
+    self.assertEqual(ans, pol)
 
   def TestZhegalkin2(self):
     f = "11010011"
     ans = "10111001"
     pol = ZhegalkinPolynom(f)
-    self.assertEquals(ans, pol)
+    self.assertEqual(ans, pol)
     
   def testWalshSpec1(self):
     f = "1110"
-    self.assertEquals(WalshSpectrum(f, 2), [-2, -2, -2, 2])
+    self.assertEqual(WalshSpectrum(f, 2), [-2, -2, -2, 2])
     
   def testNonlineartyBool1(self):
     f = "0000010100110110"
-    self.assertEquals(NonlineartyBool(f), 6)
+    self.assertEqual(NonlineartyBool(f), 6)
   
   def testIsLinearBoolFalse(self): 
     f = "0000010100110110"
