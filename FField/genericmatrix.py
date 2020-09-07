@@ -157,7 +157,7 @@ ValueError: matrix not invertible
    
     def __init__(self, size=(2,2), zeroElement=0.0, identityElement=1.0,
                  add=operator.__add__, sub=operator.__sub__,
-                 mul=operator.__mul__, div = operator.__div__,
+                 mul=operator.__mul__, div = operator.__truediv__,
                  eq = operator.__eq__, str=lambda x:repr(x),
                  equalsZero = None,fillMode='z'):
         """

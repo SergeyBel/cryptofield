@@ -206,7 +206,7 @@ class FField:
         fieldSize = 1 << self.n
         lutName = 'ffield.lut.' + repr(self.n)
         if (os.path.exists(lutName)):
-            fd = open(lutName,'r')
+            fd = open(lutName,'rb')
             self.lut = pickle.load(fd)
             fd.close()
         else:
@@ -218,7 +218,7 @@ class FField:
             for i in range(1,fieldSize):
                 self.lut.mulLUT[i] = [self.DoMultiply(i,x) for x in range(fieldSize)]
                 self.lut.divLUT[i] = [self.DoDivide(i,x) for x in range(fieldSize)]
-            fd = open(lutName,'w')
+            fd = open(lutName,'wb')
             pickle.dump(self.lut,fd)
             fd.close()
 
@@ -536,7 +536,7 @@ x^4 + x^3
                                                 self.field.FindDegree(self.f),
                                                 self.field.FindDegree(o.f))[0])
 
-    def __div__(self,other):
+    def __truediv__(self,other):
         assert self.field == other.field
         return FElement(self.field,self.field.DoDivide(self.f,other.f))
 
