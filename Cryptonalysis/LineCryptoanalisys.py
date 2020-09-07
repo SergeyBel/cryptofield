@@ -57,23 +57,23 @@ Print linear approximation table in readable format
 """
 def PrintLinearApproximationTable(table, n, m):
 	prevX = 0
-	print "   ",
+	print("   ", end=' ')
 	for i in range(0, 2**m):
-		print "%2s" % str(i),
+		print("%2s" % str(i), end=' ')
 
-	print
-	print "%3s" % "0: ",
+	print()
+	print("%3s" % "0: ", end=' ')
 	for i in range(0, len(table)):
 		s = ValueToBinaryStr(i, n + m)
 		x = s[:n]
 		y = s[n + 1:]
 		indexX = BinaryStrToValue(x)
 		if indexX != prevX:
-			print
-			print str(indexX) + ":" + " " * (2 - len(str(indexX))),
-		print "%2s" % str(table[i]),
+			print()
+			print(str(indexX) + ":" + " " * (2 - len(str(indexX))), end=' ')
+		print("%2s" % str(table[i]), end=' ')
 		prevX = indexX
-	print
+	print()
 
 		
 		

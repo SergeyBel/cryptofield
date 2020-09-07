@@ -11,7 +11,7 @@ class TestFMatrix(unittest.TestCase):
     m.Ident()
     r = m.GetRow(1)
     ans = [FElement(F, 0), FElement(F, 1), FElement(F, 0)]
-    self.assertEquals(r, ans)
+    self.assertEqual(r, ans)
 
   def testMatrixGetColumn1(self):
     F = FField(4)
@@ -19,7 +19,7 @@ class TestFMatrix(unittest.TestCase):
     m.Ident()
     r = m.GetColumn(0)
     ans = [FElement(F, 1), FElement(F, 0), FElement(F, 0), FElement(F, 0), FElement(F, 0)]
-    self.assertEquals(r, ans)
+    self.assertEqual(r, ans)
 
   def MatrixInverse():
     F = FField(2)
@@ -34,4 +34,4 @@ class TestFMatrix(unittest.TestCase):
     ans.SetRow(1, [FElement(F, 0), FElement(F, 0), FElement(F, 1), FElement(F, 0)])
     ans.SetRow(2, [FElement(F, 0), FElement(F, 1), FElement(F, 0), FElement(F, 0)])
     ans.SetRow(3, [FElement(F, 1), FElement(F, 0), FElement(F, 0), FElement(F, 0)])
-    self.assertEquals(inv, ans)
+    self.assertEqual(inv, ans)

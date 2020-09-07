@@ -105,8 +105,8 @@ def IsLinear(boolVec, n):
 def PrintEquations(equations):
 	for i in range(0, len(equations[0])):
 		for j in range(0, len(equations)):
-			print equations[j][i],
-		print
+			print(equations[j][i], end=' ')
+		print()
 	
 def FuncShiftBool(f):
 	count = 0

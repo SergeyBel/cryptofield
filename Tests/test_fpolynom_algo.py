@@ -16,7 +16,7 @@ class TestFPolynomAlgorithms(unittest.TestCase):
     y = FPolynom(F, [1])
     for t in x:
       y = y * t
-    self.assertEquals(y, f)
+    self.assertEqual(y, f)
   
   def testBerlekamp2(self):
     F = FField(1)
@@ -27,7 +27,7 @@ class TestFPolynomAlgorithms(unittest.TestCase):
       y = FPolynom(F, [1])
     for t in x:
       y = y * t
-    self.assertEquals(y, f)
+    self.assertEqual(y, f)
   
   def testBerlekamp3(self):
     F = FField(1)
@@ -41,7 +41,7 @@ class TestFPolynomAlgorithms(unittest.TestCase):
     if (x[1] == FPolynom(F, [0, 1]) and x[0] == FPolynom(F, [1, 0, 1, 1])):
       answer = True
     
-    self.assertEquals(answer, True)
+    self.assertEqual(answer, True)
   
   def testBerlekamp4(self):
     F = FField(4)
@@ -51,10 +51,10 @@ class TestFPolynomAlgorithms(unittest.TestCase):
     p = FPolynom(F, [1])
     for t in x:
       p = p * t
-    self.assertEquals(f, p)
+    self.assertEqual(f, p)
     
   def testDualBasis(self):
     F = FField(4)
     dualBasis = DualBasis(F)
     answer = [FElement(F, 9), FElement(F, 4), FElement(F, 2), FElement(F, 1)]
-    self.assertEquals(dualBasis, answer)
+    self.assertEqual(dualBasis, answer)

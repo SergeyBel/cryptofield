@@ -15,22 +15,22 @@ def DifferentialTable(sBox, n, m):
 	
 def PrintDifferentialTable(table, n, m):
 	prevX = 0
-	print "     ",
+	print("     ", end=' ')
 	for i in range(0, 2**m):
-		print "%2s" % hex(i),
-	print
-	print "%3s" % "0x0: ",
+		print("%2s" % hex(i), end=' ')
+	print()
+	print("%3s" % "0x0: ", end=' ')
 	for i in range(0, len(table)):
 		s = ValueToBinaryStr(i, n + m)
 		x = s[:n]
 		y = s[n + 1:]
 		indexX = BinaryStrToValue(x)
 		if indexX != prevX:
-			print
-			print "%3s" % hex(indexX) + ": ",
-		print "%3s" % str(table[i]),
+			print()
+			print("%3s" % hex(indexX) + ": ", end=' ')
+		print("%3s" % str(table[i]), end=' ')
 		prevX = indexX
-	print
+	print()
 
 	
 def DecodeIndexAsDif(index, n, m):

@@ -46,7 +46,7 @@ class SElement:
           coeffs[c] = True
         
     result = set()
-    for k in coeffs.keys():
+    for k in list(coeffs.keys()):
       if coeffs[k]:
         result.add(k)
     return SElement(result)

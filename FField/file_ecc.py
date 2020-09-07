@@ -54,7 +54,7 @@ The following is an example of how to use this file:
 
 
 
-from rs_code import RSCode
+from .rs_code import RSCode
 from array import array
 
 import os, struct, string
@@ -66,7 +66,7 @@ def GetFileSize(fname):
 
 def MakeHeader(fname,n,k,size):
     return string.join(['RS_PARITY_PIECE_HEADER','FILE',fname,
-                        'n',`n`,'k',`k`,'size',`size`,'piece'],
+                        'n',repr(n),'k',repr(k),'size',repr(size),'piece'],
                        headerSep) + headerSep
 
 def ParseHeader(header):
@@ -97,22 +97,22 @@ def EncodeFile(fname,prefix,n,k):
     """
     fileList = []
     if (n > 256 or k >= n or k <= 0):
-        raise Exception, 'Invalid (n,k), need 0 < k < n < 257.'
+        raise Exception('Invalid (n,k), need 0 < k < n < 257.')
     inFD = open(fname,'rb')
     inSize = GetFileSize(fname)
     header = MakeHeader(fname,n,k,inSize)
     code = RSCode(n,k,8,shouldUseLUT=-(k!=1))
-    outFD = range(n)
+    outFD = list(range(n))
     for i in range(n):
-        outFileName = prefix + '.p_' + `i`
+        outFileName = prefix + '.p_' + repr(i)
         fileList.append(outFileName)
         outFD[i] = open(outFileName,'wb')
-        outFD[i].write(header + `i` + '\n')
+        outFD[i].write(header + repr(i) + '\n')
 
     if (k == 1): # just doing repetition coding
         str = inFD.read(1024)
         while (str):
-            map( lambda x: x.write(str), outFD)
+            list(map( lambda x: x.write(str), outFD))
             str = inFD.read(256)
     else: # do the full blown RS encodding
         for i in range(0, (inSize/k)*k,k):
@@ -124,20 +124,20 @@ def EncodeFile(fname,prefix,n,k):
     return fileList
 
 def ExtractPieceNums(fnames,headers):
-    l = range(len(fnames))
-    pieceNums = range(len(fnames))
+    l = list(range(len(fnames)))
+    pieceNums = list(range(len(fnames)))
     for i in range(len(fnames)):
         l[i] = ParseHeader(headers[i])
     for i in range(len(fnames)):
         if (l[i][0] != 'RS_PARITY_PIECE_HEADER' or
             l[i][2] != l[0][2] or l[i][4] != l[0][4] or
             l[i][6] != l[0][6] or l[i][8] != l[0][8]):
-            raise Exception, 'File ' + `fnames[i]` + ' has incorrect header.'
+            raise Exception('File ' + repr(fnames[i]) + ' has incorrect header.')
         pieceNums[i] = int(l[i][10])
-    (n,k,size) = (int(l[0][4]),int(l[0][6]),long(l[0][8]))
+    (n,k,size) = (int(l[0][4]),int(l[0][6]),int(l[0][8]))
     if (len(pieceNums) < k):
-        raise Exception, ('Not enough parity for decoding; needed '
-                          + `l[0][6]` + ' got ' + `len(fnames)` + '.')
+        raise Exception('Not enough parity for decoding; needed '
+                          + repr(l[0][6]) + ' got ' + repr(len(fnames)) + '.')
     return (n,k,size,pieceNums)
 
 def ReadDecodeAndWriteBlock(writeSize,inFDs,outFD,code):
@@ -157,8 +157,8 @@ def DecodeFiles(fnames,outName):
                   The argument fnames must be a list of at least k
                   file names generated using EncodeFiles.
     """
-    inFDs = range(len(fnames))
-    headers = range(len(fnames))
+    inFDs = list(range(len(fnames)))
+    headers = list(range(len(fnames)))
     for i in range(len(fnames)):
         inFDs[i] = open(fnames[i],'rb')
         headers[i] = inFDs[i].readline()
@@ -215,4 +215,4 @@ def _test():
 
 if __name__ == "__main__":
     _test()
-    print 'Tests passed'
+    print('Tests passed')

@@ -34,23 +34,23 @@ def RandomTest():
 	n = 1000
 	deg = 4
 	for i in range(n):
-		print "i = ", i
+		print("i = ", i)
 		f = RandomFPolynom(F, deg)
 		ft = f.Copy()
-		print "f = ", f
+		print("f = ", f)
 		k = Berlekamp(F, f)
 		y = FPolynom(F, [1])
 		for t in k:
 			y = y * t
 		if not y == ft:
-			print "Error"
-			print "Factors"
+			print("Error")
+			print("Factors")
 			for m in k:
-				print m
-			print "Y = ", y, y.c
+				print(m)
+			print("Y = ", y, y.c)
 			return
 		else:
-			print len(k)
+			print(len(k))
 			
 	
 
