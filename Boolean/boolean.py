@@ -92,14 +92,15 @@ def IsLinear(boolVec, n):
 	if (n == 0):
 		return True
 	N = 2**n
-	if boolVec[0] == boolVec[N / 2]:
+	half = int(N / 2)
+	if boolVec[0] == boolVec[half]:
 		c = 0
 	else:
 		c = 1
-	for i in range(0, N / 2):
-		if int(boolVec[i]) != int(boolVec[i + N / 2]) ^ c:
+	for i in range(0, half):
+		if int(boolVec[i]) != int(boolVec[i + half]) ^ c:
 			return False
-	return IsLinear(boolVec[:(N / 2)], n - 1)
+	return IsLinear(boolVec[:half], n - 1)
 	
 	
 def PrintEquations(equations):
@@ -175,8 +176,8 @@ def IsMonotone(f):
 	length = len(f)
 	if length == 1:
 		return True
-	leftPart = f[:length / 2]
-	rightPart = f[length / 2:]
+	leftPart = f[:int(length / 2)]
+	rightPart = f[int(length / 2):]
 	for i in range(len(leftPart)):
 		if int(leftPart[i]) > int(rightPart[i]):
 			return False
