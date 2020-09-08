@@ -1,8 +1,6 @@
-import sys
-sys.path.append("../Common")
 import math
 from random import randint
-from common import *
+import cryptofield.common
 
 def XOR(vec1, vec2):
 	res = ""
@@ -183,5 +181,4 @@ def IsMonotone(f):
 			return False
 	return IsMonotone(leftPart) and IsMonotone(rightPart)
 
-	
 	
