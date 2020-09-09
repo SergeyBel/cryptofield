@@ -1,7 +1,4 @@
-import sys
-sys.path.append("../FieldPolynom")
-from field_polynom import *
-from field_polynom_algorithms import *
+from cryptofield.fieldpolynom import *
 import unittest
 
 

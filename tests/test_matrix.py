@@ -1,6 +1,4 @@
-import sys
-sys.path.append("../FieldMatrix")
-from fieldmatrix import *
+from cryptofield.fieldmatrix import *
 import unittest
 
 

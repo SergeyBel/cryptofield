@@ -1,9 +1,5 @@
-import sys
-sys.path.append("../FieldPolynom")
-sys.path.append("../Algorithms")
-from field_polynom import *
-from field_polynom_algorithms import *
-from Berlekamp import *
+from cryptofield.fieldpolynom import *
+from cryptofield.algorithms import *
 import unittest
 
 

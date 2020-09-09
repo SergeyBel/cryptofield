@@ -1,6 +1,4 @@
-import sys
-sys.path.append("../Permutation")
-from permutation import *
+from cryptofield.permutation import *
 import unittest
 
 
