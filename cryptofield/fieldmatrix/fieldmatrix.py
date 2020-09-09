@@ -1,7 +1,5 @@
-import sys
-sys.path.append("../FField")
-from ffield import *
-from genericmatrix import *
+from cryptofield.ffield import *
+
 
 
 

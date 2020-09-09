@@ -6,7 +6,7 @@ def DifferentialTable(sBox, n, m):
 	table  = [0] * 2 ** (n + m)
 	for alpha in range(0, N):
 		for betta in range (0, M):
-			#tableIndex = BinaryStrToValue(ValueToBinaryStr(alpha, n) + ValueToBinaryStr(betta, m))
+			#tableIndex = binaryStrToValue(valueToBinaryStr(alpha, n) + valueToBinaryStr(betta, m))
 			tableIndex = (alpha << m) ^ betta  #for speed
 			for x in range(0, N):
 				if sBox[x] ^ sBox[x ^ alpha] == betta:
@@ -21,10 +21,10 @@ def PrintDifferentialTable(table, n, m):
 	print()
 	print("%3s" % "0x0: ", end=' ')
 	for i in range(0, len(table)):
-		s = ValueToBinaryStr(i, n + m)
+		s = valueToBinaryStr(i, n + m)
 		x = s[:n]
 		y = s[n + 1:]
-		indexX = BinaryStrToValue(x)
+		indexX = binaryStrToValue(x)
 		if indexX != prevX:
 			print()
 			print("%3s" % hex(indexX) + ": ", end=' ')
@@ -34,7 +34,7 @@ def PrintDifferentialTable(table, n, m):
 
 	
 def DecodeIndexAsDif(index, n, m):
-	val = ValueToBinaryStr(index, n + m);
+	val = valueToBinaryStr(index, n + m);
 	difX = int(val[:n], 2)
 	difY = int(val[n:], 2)
 	return hex(difX) + "->" + hex(difY)

@@ -1,7 +1,6 @@
-from common import *
-from ffield import FElement
-import ffield
-from boolean import *
+from cryptofield.common import *
+from cryptofield.fieldpolynom import *
+from cryptofield.ffield import *
 
 def FieldPow(F, x, n):
 	p = FElement(F, 1)
@@ -14,7 +13,7 @@ def FieldPow(F, x, n):
 def FieldFuncToBooleanFunc(func, m):
 	ans = [""] * m
 	for i in range(len(func)):
-		bin = ValueToBinaryStr(func[i], m)
+		bin = valueToBinaryStr(func[i], m)
 		for j in range(m):
 			ans[j] += str(bin[j])
 	return ans

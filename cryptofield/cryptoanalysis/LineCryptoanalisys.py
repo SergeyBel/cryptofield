@@ -40,8 +40,8 @@ def LinearApproximationTable(sBox, n, m, links):
 	N = 2**n
 	table = [0] * len(links)
 	for i in range(0, N):
-		#x = ValueToBinaryStr(i, n) + ValueToBinaryStr(sBox[i], m)  
-		#index = BinaryStrToValue(x) #index = X|Y= line in links table
+		#x = valueToBinaryStr(i, n) + valueToBinaryStr(sBox[i], m)  
+		#index = binaryStrToValue(x) #index = X|Y= line in links table
 		index = (i << m) ^ sBox[i]    #for speed
 		for j in range(0, len(links)):
 			# if for equation j cell X|Y ==0, it means (i, sBox[i]) satisfy eq with number j
@@ -64,10 +64,10 @@ def PrintLinearApproximationTable(table, n, m):
 	print()
 	print("%3s" % "0: ", end=' ')
 	for i in range(0, len(table)):
-		s = ValueToBinaryStr(i, n + m)
+		s = valueToBinaryStr(i, n + m)
 		x = s[:n]
 		y = s[n + 1:]
-		indexX = BinaryStrToValue(x)
+		indexX = binaryStrToValue(x)
 		if indexX != prevX:
 			print()
 			print(str(indexX) + ":" + " " * (2 - len(str(indexX))), end=' ')

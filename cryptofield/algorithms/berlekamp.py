@@ -1,14 +1,4 @@
-import sys
-sys.path.append("../Boolean")
-sys.path.append("../FField")
-sys.path.append("../FFIeldFunc")
-sys.path.append("../Cryptonalysis")
-sys.path.append("../FieldPolynom")
-sys.path.append("../FieldMatrix")
-from ffield import *
-from field_polynom import *
-from field_polynom_algorithms import *
-from fieldmatrix import *
+from cryptofield.fieldpolynom import *
 
 
 # functions for compatibility with GenericMatrix constructor

@@ -1,14 +1,7 @@
-
-import sys
-sys.path.append("../Boolean")
-sys.path.append("../FField")
-sys.path.append("../FFIeldFunc")
-sys.path.append("../Cryptonalysis")
-from DifferentialCryptanalisys import *
-from LineCryptoanalisys import *
-from ffield import *
-from  boolean import *
-from field_func import *
+from cryptofield.ffield import *
+from cryptofield.common import *
+from cryptofield.boolean import *
+from cryptofield.fieldfunc import *
 import itertools
 from random import randint
 
@@ -252,13 +245,13 @@ class FPolynom:
 
 	def IsLinear(self):
 		for i in range(len(self.c)):
-			if (not self.c[i] == FElement(self.field, 0)) and IsPowerTwo(i) == False:
+			if (not self.c[i] == FElement(self.field, 0)) and isPowerTwo(i) == False:
 				return False
 		return True
 
 	def IsAffine(self):
 		for i in range(len(self.c)):
-			if (not self.c[i] == FElement(self.field, 0)) and IsPowerTwo(i) == False and i != 0:
+			if (not self.c[i] == FElement(self.field, 0)) and isPowerTwo(i) == False and i != 0:
 				return False
 		return True
 

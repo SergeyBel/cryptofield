@@ -1,6 +1,4 @@
-import sys
-sys.path.append("../Boolean")
-from boolean import *
+from cryptofield.boolean import *
 import unittest
 
 
@@ -9,7 +7,7 @@ class TestBoolean(unittest.TestCase):
   def testZhegalkin1(self):
     f = "0011"
     ans = "0010"
-    pol = ZhegalkinPolynom(f)
+    pol = boolean.ZhegalkinPolynom(f)
     self.assertEqual(ans, pol)
 
   def TestZhegalkin2(self):
