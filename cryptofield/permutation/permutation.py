@@ -88,12 +88,12 @@ def NextPermutation(perm):
 	while perm[k] < perm[j]:
 		k-=1
 
-	SwapArr(perm, k, j)
+	swapArr(perm, k, j)
 	
 	left = j + 1
 	right = n - 1
 	while left < right:
-		SwapArr(perm, left, right)
+		swapArr(perm, left, right)
 		left += 1
 		right -= 1
 	

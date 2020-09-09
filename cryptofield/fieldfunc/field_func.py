@@ -13,7 +13,7 @@ def FieldPow(F, x, n):
 def FieldFuncToBooleanFunc(func, m):
 	ans = [""] * m
 	for i in range(len(func)):
-		bin = ValueToBinaryStr(func[i], m)
+		bin = valueToBinaryStr(func[i], m)
 		for j in range(m):
 			ans[j] += str(bin[j])
 	return ans

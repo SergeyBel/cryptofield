@@ -31,7 +31,7 @@ def WalshCoeff(f, u, n):
 	sum = 0
 	x = 0
 	while x < 2**n:
-		p = int(f[x]) ^ ScalarBool(ValueToBinaryStr(x, n), u)
+		p = int(f[x]) ^ ScalarBool(valueToBinaryStr(x, n), u)
 		if p % 2 ==  0:
 			sum = sum + 1
 		else:
@@ -53,8 +53,8 @@ def FourierCoeff(f, u, n):
 	sum = 0
 	x = 0
 	while x < 2**n:
-		p = ScalarBool(ValueToBinaryStr(x, n), u)
-		#print ValueToBinaryStr(x, n), u, p, f[x]
+		p = ScalarBool(valueToBinaryStr(x, n), u)
+		#print valueToBinaryStr(x, n), u, p, f[x]
 		if p % 2 ==  0:
 			sum = sum + int(f[x])
 		else:
@@ -138,14 +138,14 @@ def StrZhegalkinPolynom(coeffs):
 	s = ""
 	for i in range(len(coeffs)):
 		if coeffs[i] == "1":
-			decomp = list(ValueToBinaryStr(i, variablesNum))
+			decomp = list(valueToBinaryStr(i, variablesNum))
 			monom = ""
 			for j in range(variablesNum):
 				if decomp[j] == "1":
 					monom = monom + "x" + str(j + 1)
 			if monom == "":
 				monom = "1"
-			#print i, ValueToBinaryStr(i, variablesNum), monom
+			#print i, valueToBinaryStr(i, variablesNum), monom
 			s = s + monom + "+"
 	s = s[:-1]  # delete last +
 	if s == "":

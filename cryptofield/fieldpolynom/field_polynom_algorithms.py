@@ -111,7 +111,7 @@ def DualBasis(F):
 		t = b.GetRow(i)
 		for j in range(len(t)):
 			num += str(t[j].f)
-		dualBasis.append(FElement(F, BinaryStrToValue(num[::-1])))
+		dualBasis.append(FElement(F, binaryStrToValue(num[::-1])))
 	return dualBasis
 
 def FromZhekalkinPolynom(F, coeffs):
@@ -125,7 +125,7 @@ def FromZhekalkinPolynom(F, coeffs):
 	for i in range(len(coeffs)):
 		if (coeffs[i] == "1"):
 			monom = FPolynom(F, [1])
-			decomp = list(ValueToBinaryStr(i, n))
+			decomp = list(valueToBinaryStr(i, n))
 			for j in range(n):
 				if decomp[j] == "1":
 					monom *= coords[j];
@@ -134,7 +134,7 @@ def FromZhekalkinPolynom(F, coeffs):
 	return f
 
 def FromInt (F, a):
-  g = ValueToBinaryStr(a)[::-1]
+  g = valueToBinaryStr(a)[::-1]
   c = []
   for j in range(len(g)):
     c.append(int(g[j]))
@@ -143,14 +143,14 @@ def FromInt (F, a):
 
 
 def IrreducibleProduct(F, n):
-	divisors = NumberDivisors(n)
+	divisors = numberDivisors(n)
 	f = FPolynom(F, [1])
 	for d in divisors:
 		c = [0] * (2**(n / d) + 1)
 		c[1] = 1
 		c[2**(n / d)] = 1
 		g = FPolynom(F, c)
-		m = Mobius(d)
+		m = mobius(d)
 		if m == 1:
 			f *= g
 		elif m == -1:

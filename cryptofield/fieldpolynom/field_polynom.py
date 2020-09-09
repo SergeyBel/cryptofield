@@ -245,13 +245,13 @@ class FPolynom:
 
 	def IsLinear(self):
 		for i in range(len(self.c)):
-			if (not self.c[i] == FElement(self.field, 0)) and IsPowerTwo(i) == False:
+			if (not self.c[i] == FElement(self.field, 0)) and isPowerTwo(i) == False:
 				return False
 		return True
 
 	def IsAffine(self):
 		for i in range(len(self.c)):
-			if (not self.c[i] == FElement(self.field, 0)) and IsPowerTwo(i) == False and i != 0:
+			if (not self.c[i] == FElement(self.field, 0)) and isPowerTwo(i) == False and i != 0:
 				return False
 		return True
 
