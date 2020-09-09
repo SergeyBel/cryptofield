@@ -1,107 +1,89 @@
 from random import randint
 from cryptofield.common import *
+from cryptofield.permutation.cycles import *
 
 
-def InvPermutation(f):
-	inv = [f.index(i) for i in range(len(f))]
-	return inv
-	
-	
-def IsPermutation(func):
-	f = sorted(func)
-	for i in range(len(f) - 1):
-		if f[i] == f[i + 1]:
-			return False
-	return True
-	
-	
+class Permutation:
+	def __init__(self, func):
+		self.func = func
+		self.length = len(func)
 
-def GetCycles(perm):
-	#all cycles store in list cycles cycles[length] = list of cycles with this length
-	cycles = list()
-	for i in range(len(perm) + 1):
-		cycles.append(list())
-	flags = [0] * len(perm)
-	for i in range(len(perm)):
-		if flags[i] == 0:
-			j = perm[i]
-			cycle = []
-			cycleLen = 0
-			while flags[j] != 1:
-				cycle.append(j)
-				cycleLen += 1
-				flags[j] = 1
-				j = perm[j]
-			cycles[cycleLen].append(cycle)
-	return cycles
-			
+	def isPermutation(self):
+		f = sorted(self.func)
+		for i in range(len(f) - 1):
+			if f[i] == f[i + 1]:
+				return False
+		return True
 
-
-			
-def StrCycles(cycles):
-	s = ""
-	for i in range(len(cycles)):
-		cs = cycles[i]  #all cyles with length i
-		if cs:
-			for cycle in cs:
-				s += CycleToStr(cycle)
-	return s
+	def inversePermutation(self):
+		inv = Permutation([self.func.index(i) for i in range(self.length)])
+		return inv
 	
-def CycleToStr(cycle):
-	s = "("
-	for i in range(len(cycle)):
-		s = s + str(cycle[i])
-		if i != len(cycle) - 1:
-			s = s + ","
-	s = s + ")"
-	return s
-				
-
-def CycleStruct(cycle):
-	struct = [0] * (len(cycle) - 1)
-	for i in range(1, len(cycle)):
-		struct[i - 1] = len(cycle[i])
-	return struct
-			
 	
-
-	
-def RandomPermutation(max):
-	nums = list(i for i in range(max))
-	perm = list()
-	for i in range(max):
-		j = randint(0, len(nums) - 1)
-		perm.append(nums[j])
-		del nums[j]
+	def getCycles(self):
+		cycles = [0] * (self.length + 1)
+		flags = [False] * self.length
 		
-	return perm
+		for i in range(self.length):
+			if flags[i] == False:
+				cycleLen = 1
+				flags[i] = True
+				j = self.func[i]
+				while flags[j] != True:
+					cycleLen += 1
+					flags[j] = True
+					j = self.func[j]
+				cycles[cycleLen] += 1
+		cycles.pop(0)  # delete 0-length cycle
+		return PermutationCycles(cycles)
+
+	def nextPermutation(self):
+		n = self.length
+		perm = self.func
+		j = n - 2
+		while j >= 0 and perm[j] > perm[j + 1]:
+			j-=1
+		if j == -1:
+			return False
+		k = n - 1
+		while perm[k] < perm[j]:
+			k -= 1
+
+		swapArr(perm, k, j)
+	
+		left = j + 1
+		right = n - 1
+		while left < right:
+			swapArr(perm, left, right)
+			left += 1
+			right -= 1
+	
+		return Permutation(perm)	
+
+	def __str__(self):
+		return str(self.func)
+
+	def __eq__(self, other):
+		return self.func == other.func
+	
+	@staticmethod
+	def randomPermutation(max):
+		nums = list(i for i in range(max))
+		perm = list()
+		for i in range(max):
+			j = randint(0, len(nums) - 1)
+			perm.append(nums[j])
+			del nums[j]
+		
+		return Permutation(perm)
 	
 
-def NextPermutation(perm):
-	n = len(perm)
-	j = n - 2
-	while j >= 0 and perm[j] > perm[j + 1]:
-		j-=1
-	if j == -1:
-		return False
-	k = n - 1
-	while perm[k] < perm[j]:
-		k-=1
 
-	swapArr(perm, k, j)
-	
-	left = j + 1
-	right = n - 1
-	while left < right:
-		swapArr(perm, left, right)
-		left += 1
-		right -= 1
-	
-	return perm
-	
+
+
 def PermCompose(f, g):
 	h = []
-	for i in range(len(f)):
-		h.append(f[g[i]])
-	return h
+	for i in range(len(f.func)):
+		h.append(f.func[g.func[i]])
+	return Permutation(h)
 		

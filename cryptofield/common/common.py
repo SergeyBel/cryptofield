@@ -25,7 +25,7 @@ def numberDivisors(n):
 			divisors.append(i)
 	return divisors
 
-def IsPrime(n):
+def isPrime(n):
 	if n == 1:
 		return False
 	if n == 2:
@@ -40,7 +40,7 @@ def mobius(n):
 		return 1
 	k = 0
 	for i in range(2, n + 1):
-		if IsPrime(i):
+		if isPrime(i):
 			if n % i == 0:
 				if n % (i*i) == 0:
 					return 0

@@ -1,0 +1,20 @@
+from cryptofield.permutation import *
+
+values = [0, 2, 6, 7, 3, 4, 5, 1]
+permutation = Permutation(values)
+print ('Permutation:')
+print (permutation)
+print ('Is permutation:', permutation.isPermutation())
+print ('Cycle struct:')
+cycles = permutation.getCycles()
+print (cycles)
+print ('Next permutation:')
+inverse = permutation.nextPermutation()
+print (inverse)
+print ('Inverse permutation:')
+inverse = permutation.inversePermutation()
+print (inverse)
+print ('Composition with inverse:')
+print (PermCompose(permutation, inverse))
+print ('Random permutation:')
+print (Permutation.randomPermutation(20))
