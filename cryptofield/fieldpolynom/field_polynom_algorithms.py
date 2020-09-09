@@ -1,9 +1,5 @@
-import sys
-sys.path.append("../FieldMatrix")
-sys.path.append("../Boolean")
-from field_polynom import *
-from fieldmatrix import *
-from boolean import *
+from cryptofield.fieldpolynom import *
+from cryptofield.fieldmatrix import *
 
 def PolynomEquilid(F, x, y):
 	if (x.Deg() < y.Deg()):

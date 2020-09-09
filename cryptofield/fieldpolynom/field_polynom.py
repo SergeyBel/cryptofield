@@ -1,14 +1,7 @@
-
-import sys
-sys.path.append("../Boolean")
-sys.path.append("../FField")
-sys.path.append("../FFIeldFunc")
-sys.path.append("../Cryptonalysis")
-from DifferentialCryptanalisys import *
-from LineCryptoanalisys import *
-from ffield import *
-from  boolean import *
-from field_func import *
+from cryptofield.ffield import *
+from cryptofield.common import *
+from cryptofield.boolean import *
+from cryptofield.fieldfunc import *
 import itertools
 from random import randint
 

@@ -1,6 +1,6 @@
 import math
 from random import randint
-import cryptofield.common
+from cryptofield.common import *
 
 def XOR(vec1, vec2):
 	res = ""

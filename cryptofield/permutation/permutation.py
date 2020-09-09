@@ -1,7 +1,5 @@
-import sys
-sys.path.append("../Common")
 from random import randint
-from common import *
+from cryptofield.common import *
 
 
 def InvPermutation(f):

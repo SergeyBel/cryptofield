@@ -1,7 +1,6 @@
-from common import *
-from ffield import FElement
-import ffield
-from boolean import *
+from cryptofield.common import *
+from cryptofield.fieldpolynom import *
+from cryptofield.ffield import *
 
 def FieldPow(F, x, n):
 	p = FElement(F, 1)
