@@ -9,7 +9,24 @@ def valueToBinaryStr(value, length = False):
 def binaryStrToValue(str):
 	return int(str, 2)
 
-	
+def scalarBool(vec1, vec2):
+		s = 0
+		for i in range(0, len(vec1)):
+			s = s + ( (int(vec1[i]) & int(vec2[i])))
+		return s
+
+def nextBoolVec(vec):
+	t = list(vec)
+	i = len(t) - 1
+	while (t[i] == "1" and i >= 0):
+		i = i - 1
+	if i < 0:
+		return False
+	t[i] = "1"
+	for j in range(i + 1, len(vec)):
+		t[j] = "0"
+	return "".join(t)  # convert list to to string
+
 def swapArr(a, i, j):
 	c = a[i]
 	a[i] = a[j]

@@ -10,7 +10,7 @@ def LinearLink(lineX, lineY):
 	while x != "":
 		y = "0" * len(lineY)
 		while y != "":
-			func.append( (ScalarBool(x, lineX) + ScalarBool(y, lineY)) % 2)
+			func.append( (scalarBool(x, lineX) + scalarBool(y, lineY)) % 2)
 			y = NextBoolVec(y)
 		x = NextBoolVec(x)
 	return func
