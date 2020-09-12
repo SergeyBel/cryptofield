@@ -2,12 +2,12 @@ from cryptofield.fieldpolynom import *
 from cryptofield.fieldmatrix import *
 
 def PolynomEquilid(F, x, y):
-	if (x.Deg() < y.Deg()):
-		f = y.Copy()
-		g = x.Copy()
+	if (x.deg() < y.deg()):
+		f = y.copy()
+		g = x.copy()
 	else:
-		f = x.Copy()
-		g = y.Copy()
+		f = x.copy()
+		g = y.copy()
 		
 	polNull = FPolynom(F, [0])
 	
@@ -20,7 +20,7 @@ def PolynomEquilid(F, x, y):
 			break
 		f = g
 		g = r
-	g.Normalize()
+	g.normalize()
 	return g
 	
 def PolynomPow(F, x, n):
@@ -104,7 +104,7 @@ def DualBasis(F):
 	a = FMatrix(F, n, n)
 	for i in range(n):
 		for j in range(i + 1):
-			a[j, i] = a[i, j] = tr.Value(FPow(F, alpha, i + j))
+			a[j, i] = a[i, j] = tr.value(FPow(F, alpha, i + j))
 	b = a.Inverse()
 	for i in range(n):
 		num = "";
@@ -130,7 +130,7 @@ def FromZhekalkinPolynom(F, coeffs):
 				if decomp[j] == "1":
 					monom *= coords[j];
 			f += monom
-	f.Reduce()
+	f.reduce()
 	return f
 
 def FromInt (F, a):
@@ -156,3 +156,14 @@ def IrreducibleProduct(F, n):
 		elif m == -1:
 			f /= g
 	return f
+
+def FPow(F, x, n):
+	p = FElement(F, 1)
+	while (n):
+		if (n & 1):
+			p *= x;
+			n -= 1
+		else:
+			x *= x;
+			n >>= 1;
+	return p

@@ -4,6 +4,43 @@ import unittest
 
 
 class TestFPolynomAlgorithms(unittest.TestCase):
+
+  def testEquilid1(self):
+    F = FField(2)
+    x = FPolynom(F, [1, 0, 1])
+    y = FPolynom(F, [3, 2, 1])
+    z = PolynomEquilid(F, x, y)
+    answer = FPolynom(F, [1, 1])
+    self.assertEqual(z, answer)
+
+  def testEquilid2(self):
+    F = FField(8)
+    a = FPolynom(F, [35, 22, 15, 89, 64])
+    x = FPolynom(F, [1, 23, 45, 176, 90, 87, 65, 30])
+    y = x * a
+    z = PolynomEquilid(F, x, y)
+    answer = PolynomEquilid(F, x, x)
+    self.assertEqual(z, answer)
+
+
+  def testPow1(self):
+    F = FField(2)
+    x = PolynomPow(F, FPolynom(F, [0, 1, 1]), 2)
+    answer = FPolynom(F, [0, 0, 1, 0, 1])
+    self.assertEqual(x, answer)
+
+  def testPow2(self):
+    F = FField(2)
+    x = PolynomPow(F, FPolynom(F, []), 1)
+    answer = FPolynom(F, [])
+    self.assertEqual(x, answer)
+
+  def testPow3(self):
+    F = FField(2)
+    x = PolynomPow(F, FPolynom(F, []), 0)
+    answer = FPolynom(F, [1])
+    self.assertEqual(x, answer)
+
   def testBerlekamp1(self):
     F = FField(1)
     #x^8 + x^6 + x^4 + x^3 + x^1 = (1 + x + x^2)(1 + x + x^4 + x^5 + x^6)
@@ -54,3 +91,35 @@ class TestFPolynomAlgorithms(unittest.TestCase):
     dualBasis = DualBasis(F)
     answer = [FElement(F, 9), FElement(F, 4), FElement(F, 2), FElement(F, 1)]
     self.assertEqual(dualBasis, answer)
+
+  def testFromZhekalkinPolynom1(self):
+    F = FField(2)
+    f = BooleanFunction("0011")
+    zhekalkin = f.zhegalkinPolynom()
+    g = FromZhekalkinPolynom(F, zhekalkin.coeffs)
+    answer = FPolynom(F, [0, 1, 1])
+    self.assertEqual(g, answer)
+
+  def testFromZhekalkinPolynom2(self):
+    F = FField(2)
+    f = BooleanFunction("0001")
+    zhekalkin = f.zhegalkinPolynom()
+    g = FromZhekalkinPolynom(F, zhekalkin.coeffs)
+    answer = FPolynom(F, [0, 2, 3, 1])
+    self.assertEqual(g, answer)
+
+  def testFromZhekalkinPolynom3(self):
+    F = FField(2)
+    f = BooleanFunction("0110")
+    zhekalkin = f.zhegalkinPolynom()
+    g = FromZhekalkinPolynom(F, zhekalkin.coeffs)
+    answer = FPolynom(F, [0, 2, 3])
+    self.assertEqual(g, answer)
+
+  def testFromZhekalkinPolynom4(self):
+    F = FField(4)
+    f = BooleanFunction("0"*15 + "1")
+    zhekalkin = f.zhegalkinPolynom()
+    g = FromZhekalkinPolynom(F, zhekalkin.coeffs)
+    answer = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+    self.assertEqual(g.values(False), answer)

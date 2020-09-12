@@ -8,171 +8,95 @@ from random import randint
 #polynom a_0+a_1*X+...+a_n-1*X^n = (a_0, a_1,...,a_n-1)
 
 
-
-	
-def DegPolynom(F, coeffs):
-	i = len(coeffs) - 1
-	NullElem = FElement(F, 0)
-	while  i >= 0 and coeffs[i] == NullElem:
-		i = i - 1
-	return i
-	
-def StrPolynom(F, coeffs, polynom = False, isTex = False):
-	s = ""
-	if (DegPolynom(F, coeffs) == -1):
-		return "0"
-	n = len(coeffs) - 1
-	first = True
-	for i in range(n, -1, -1):
-		if (coeffs[i] == FElement(F, 0)):
-			continue
-		if polynom == True:
-			coeff = str(coeffs[i])
-		else:
-			coeff = str(coeffs[i].f)
-
-		if (coeff == '1' and i != 0):
-			coeff = ''
-
-
-		before = " + "
-		power = str(i)
-
-		if (isTex == True):
-			power = "{" + power + "}"
-
-		if (first == True):
-			before = ""
-			first = False
-
-		if i == 0:
-			monom = coeff
-		elif i == 1:
-			monom = coeff + 'X'
-		else:
-			monom = coeff + "X^" + power
-
-		s = s + before + monom
-
-	return s
-
-def PolynomCorrect(F, x):
-	NullElem = FElement(F, 0)
-	while (len(x) > 1  and x[-1] == NullElem):
-		del x[-1]
-	return x
-
-
-def PolynomAdd(F, x, y): 
-	lenX = len(x)
-	lenY = len(y)
-	ans = []
-	if lenX > lenY:
-		c = x
-		m = lenX
-		n = lenY
-	else:
-		c = y
-		m = lenY
-		n = lenX
-		
-	for i in range(n):
-		ans.append(x[i] + y[i])
-	ans[n:m] = c[n:m]
-	return PolynomCorrect(F, ans)
-	
-def PolynomSub(F, x, y):
-	return PolynomAdd(F, x, y)
-	
-def PolynomMul(F, x, y):
-	NullElement = FElement(F, 0)
-	lenX = len(x)
-	lenY = len(y)
-	n = lenX + lenY - 1
-	ans = [NullElement] * n
-	for i in range(0, lenX):
-		for j in range(0, lenY):
-			ans[i + j] += x[i] * y[j]
-	return PolynomCorrect(F, ans)
-	
-def PolynomDiv(F, x, y):
-
-	NullElement = FElement(F, 0)
-	degX = DegPolynom(F, x)
-	degY = DegPolynom(F, y)
-
-	n = max(len(x) - len(y) + 1, 1)
-	divisor = [NullElement] * n
-	g = x[:]
-	while (degX >= degY):
-		p = degX - degY    #divisor degree
-		c = g[-1] / y[-1] #divisor coeff
-		d = [NullElement] * (p + 1)
-		d[-1] = c
-		divisor = PolynomAdd(F, divisor, d)
-		z = PolynomMul(F, y, d)
-		g = PolynomSub(F, g, z)
-		degX = DegPolynom(F, g)
-	return (PolynomCorrect(F, divisor), PolynomCorrect(F, g))
-	
-def PolynomNormalize(F, x):
-	c = x[-1]
-	normalizator = [FElement(F, F.Inverse(c.f))]
-	z = PolynomMul(F, x, normalizator)
-	return z
-
-
-	
-
-	
-def FPow(F, x, n):
-	p = FElement(F, 1)
-	while (n):
-		if (n & 1):
-			p *= x;
-			n -= 1
-		else:
-			x *= x;
-			n >>= 1;
-	return p
-
-
 class FPolynom:
 	def __init__(self, field, coeffs, isField = False):
 		self.field = field
+		self.nullElement = FElement(self.field, 0)
+		self.oneElement = FElement(self.field, 1)
 		if (isField == False):
 			self.c = []
 			for i in range(len(coeffs)):
 				self.c.append(FElement(field, coeffs[i]))
 		else:
 			self.c = coeffs[:]
-		PolynomCorrect(self.field, self.c)
+		self.__polynomCorrect(self.field, self.c)
+
+	def __polynomCorrect(self, F, x):
+		NullElem = FElement(F, 0)
+		while (len(x) > 1  and x[-1] == NullElem):
+			del x[-1]
+		return x
 		
-			
 	def __add__(self, other):
-		return FPolynom(self.field, PolynomAdd(self.field, self.c, other.c), True)
+		return FPolynom(self.field, self.__polynomAdd(self.field, self.c, other.c), True)
+
+	def __polynomAdd(self, F, x, y): 
+		lenX = len(x)
+		lenY = len(y)
+		ans = []
+		if lenX > lenY:
+			c = x
+			m = lenX
+			n = lenY
+		else:
+			c = y
+			m = lenY
+			n = lenX
+		
+		for i in range(n):
+			ans.append(x[i] + y[i])
+		ans[n:m] = c[n:m]
+		return self.__polynomCorrect(F, ans)
+
+	def __polynomSub(self, F, x, y): 
+		return self.__polynomAdd(F, x, y)
 		
 	def __sub__(self, other):
-		return FPolynom(self.field, PolynomSub(self.field, self.c, other.c), True)
+		return self + other
 		
 	def __mul__(self, other):
-		return FPolynom(self.field, PolynomMul(self.field, self.c, other.c), True)
+		return FPolynom(self.field, self.__polynomMul(self.field, self.c, other.c), True)
+
+	def __polynomMul(self, F, x, y):
+		lenX = len(x)
+		lenY = len(y)
+		n = lenX + lenY - 1
+		ans = [self.nullElement] * n
+		for i in range(0, lenX):
+			for j in range(0, lenY):
+				ans[i + j] += x[i] * y[j]
+		return self.__polynomCorrect(F, ans)
 
 	def __truediv__(self, other):
-		(divisor, rest) = PolynomDiv(self.field, self.c, other.c)  # x / y
+		(divisor, rest) = self.__polynomDiv(self.field, self.c, other.c)  # x / y
 		return FPolynom(self.field, divisor, True)
 		
 	def __mod__(self, other):
-		(divisor, rest) = PolynomDiv(self.field, self.c, other.c)  # x % y
+		(divisor, rest) = self.__polynomDiv(self.field, self.c, other.c)  # x % y
 		return FPolynom(self.field, rest, True)
+
+	def __polynomDiv(self, F, x, y):
+		degX = self.__degPolynom(F, x)
+		degY = self.__degPolynom(F, y)
+
+		n = max(len(x) - len(y) + 1, 1)
+		divisor = [self.nullElement] * n
+		g = x[:]
+		while (degX >= degY):
+			p = degX - degY    #divisor degree
+			c = g[-1] / y[-1] #divisor coeff
+			d = [self.nullElement] * (p + 1)
+			d[-1] = c
+			divisor = self.__polynomAdd(F, divisor, d)
+			z = self.__polynomMul(F, y, d)
+			g = self.__polynomSub(F, g, z)
+			degX = self.__degPolynom(F, g)
+		return (self.__polynomCorrect(F, divisor), self.__polynomCorrect(F, g))
 		
 	def __len__(self):
 		return len(self.c)
 
-
-	def __str__(self):
-		return StrPolynom(self.field, self.c)
-		
+	
 	def __eq__(self,other):
 		return self.field == other.field and self.c == other.c
 		
@@ -183,53 +107,76 @@ class FPolynom:
 		t = tuple(s)
 		return hash( (self.field, t) )
 		
-	def Correct(self):
-		return FPolynom(self.field, PolynomCorrect(self.field, self.c), True)
+	def correct(self):
+		return FPolynom(self.field, self.__polynomCorrect(self.field, self.c), True)
 	
-	def Deg(self):
-		return DegPolynom(self.field, self.c)
+	def deg(self):
+		return self.__degPolynom(self.field, self.c)
+
+	def __degPolynom(self, F, coeffs):
+		i = len(coeffs) - 1
+		while  i >= 0 and coeffs[i] == self.nullElement:
+			i = i - 1
+		return i
 	
-	def Normalize(self):
-		self.Correct()
-		self.c = PolynomNormalize(self.field, self.c)
+	def normalize(self):
+		self.correct()
+		self.c = self.__polynomNormalize(self.field, self.c)
+
+	def __polynomNormalize(self, F, x):
+		c = x[-1]
+		normalizator = [FElement(F, F.Inverse(c.f))]
+		z = self.__polynomMul(F, x, normalizator)
+		return z
 		
-	def Derivative(self):
+	def derivative(self):
 		"""
 		f = a_0+a_1*X+...+a_n-1*X^n
 		f' = a_1+2*a_2*X+...+(n-1)a_n-1*X^(n-1)
 		n * a = a + a + a + ... + a, n times
 		"""
-		t = self.Copy()
+		t = self.copy()
 		t.c.pop(0)
 		for i in range(len(t.c)):
-			k = FElement(t.field, 0)
+			k = self.nullElement
 			for j in range(i + 1):
 				k = k + t.c[i]
 			t.c[i] = k
-		return t.Correct()
+		return t.correct()
 		
-	def Copy(self):
+	def copy(self):
 		return FPolynom(self.field, self.c[:], True)
 		
-	def Value(self, x, isField = True):
-		v = FElement(self.field, 0)
+	def value(self, x, isField = True):
+		v = self.nullElement
 		for i in range(len(self.c)):
-			v = v + self.c[i] * FPow(self.field, x, i)
+			v = v + self.c[i] * self.__fPow(self.field, x, i)
 		if (isField == True):
 			return v
 		else:
 			return v.f 
+
+	def __fPow(self, F, x, n):
+		p = self.oneElement
+		while (n):
+			if (n & 1):
+				p *= x;
+				n -= 1
+			else:
+				x *= x;
+				n >>= 1;
+		return p
 		
-	def Values(self, isField = True):
+	def values(self, isField = True):
 		N = 2 ** self.field.n
 		values = []
 		for i in range(N):
-			values.append(self.Value(FElement(self.field, i), isField))
+			values.append(self.value(FElement(self.field, i), isField))
 		return values
 
-	def FromPermutation(self, perm, isFieldPerm = False):
+	def fromPermutation(self, perm, isFieldPerm = False):
 		n = 2**self.field.n
-		self.c = [FElement(self.field, 0)] * n
+		self.c = [self.nullElement] * n
 		constants = list()
 		for i in range(n):
 			constants.append(FElement(self.field, i))
@@ -241,41 +188,95 @@ class FPolynom:
 			for j in range(n):
 				self.c[i]  += perm[j] * FieldPow(self.field, constants[j], n - i - 1)
 		self.c[0] = perm[0];
-		self.Correct()
+		self.correct()
 
-	def IsLinear(self):
+	def isLinear(self):
 		for i in range(len(self.c)):
-			if (not self.c[i] == FElement(self.field, 0)) and isPowerTwo(i) == False:
+			if (not self.c[i] == self.nullElement) and isPowerTwo(i) == False:
 				return False
 		return True
 
-	def IsAffine(self):
+	def isAffine(self):
 		for i in range(len(self.c)):
-			if (not self.c[i] == FElement(self.field, 0)) and isPowerTwo(i) == False and i != 0:
+			if (not self.c[i] == self.nullElement) and isPowerTwo(i) == False and i != 0:
 				return False
 		return True
 
-	def Rank(self):
+	def rank(self):
 		rank = 0
 		for i in range(len(self.c)):
-			if not self.c[i] == FElement(self.field, 0):
+			if not self.c[i] == self.nullElement:
 				rank +=1
 		return rank
 
 	#reduce polynom in field using x^q = x
-	def Reduce(self):
+	def reduce(self):
 		N = 2**self.field.n
 		for i in range(N, len(self.c)):
 			j = int ((i / N + i % N) % N)
 			if (j == 0):
 				j = 1
 			self.c[j] += self.c[i]
-			self.c[i] = FElement(self.field, 0)
-		self.Correct()
+			self.c[i] = self.nullElement
+		self.correct()
 
-	def TexString(self):
-		return StrPolynom(self.field, self.c, False, True)
+	def __str__(self):
+		return self.__strPolynom(self.field, self.c)
+	
+	def texString(self):
+		return self.strPolynom(self.field, self.c, False, True)
+
+	
+	def __strPolynom(self, F, coeffs, polynom = False, isTex = False):
+		s = ""
+		if (self.__degPolynom(F, coeffs) == -1):
+			return "0"
+		n = len(coeffs) - 1
+		first = True
+		for i in range(n, -1, -1):
+			if (coeffs[i] == self.nullElement):
+				continue
+			if polynom == True:
+				coeff = str(coeffs[i])
+			else:
+				coeff = str(coeffs[i].f)
+
+			if (coeff == '1' and i != 0):
+				coeff = ''
 
 
-		
+			before = " + "
+			power = str(i)
+
+			if (isTex == True):
+				power = "{" + power + "}"
+
+			if (first == True):
+				before = ""
+				first = False
+
+			if i == 0:
+				monom = coeff
+			elif i == 1:
+				monom = coeff + 'X'
+			else:
+				monom = coeff + "X^" + power
+
+			s = s + before + monom
+
+		return s
+
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
 

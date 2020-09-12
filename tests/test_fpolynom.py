@@ -2,7 +2,7 @@ from cryptofield.fieldpolynom import *
 import unittest
 
 
-class TestBoolean(unittest.TestCase):
+class TestFpolynom(unittest.TestCase):
   def testAdd1(self):
     F = FField(4)
     x = FPolynom(F, [1, 0, 5, 15])
@@ -112,27 +112,11 @@ class TestBoolean(unittest.TestCase):
     z = d % y
     self.assertEqual(z, answer)
     
-  def testEquilid1(self):
-    F = FField(2)
-    x = FPolynom(F, [1, 0, 1])
-    y = FPolynom(F, [3, 2, 1])
-    z = PolynomEquilid(F, x, y)
-    answer = FPolynom(F, [1, 1])
-    self.assertEqual(z, answer)
-
-  def testEquilid2(self):
-    F = FField(8)
-    a = FPolynom(F, [35, 22, 15, 89, 64])
-    x = FPolynom(F, [1, 23, 45, 176, 90, 87, 65, 30])
-    y = x * a
-    z = PolynomEquilid(F, x, y)
-    answer = PolynomEquilid(F, x, x)
-    self.assertEqual(z, answer)
   
   def testDerivative1(self):
     F = FField(8)
     x = FPolynom(F, [1, 23, 45, 176, 90, 87, 65, 30])
-    y = x.Derivative()
+    y = x.derivative()
     answer = FPolynom(F, [23, 0, 176, 0, 87, 0, 30])
     self.assertEqual(y, answer)
 
@@ -140,102 +124,52 @@ class TestBoolean(unittest.TestCase):
     F = FField(2)
     x = FPolynom(F, [0, 1, 1, 0, 1, 0, 0, 0, 1])
     answer = True
-    self.assertEqual(x.IsLinear(), answer)
+    self.assertEqual(x.isLinear(), answer)
 
   def testIsLinear2(self):
     F = FField(4)
     x = FPolynom(F, [0, 1, 1, 3, 1, 0, 0, 0, 1])
     answer = False
-    self.assertEqual(x.IsLinear(), answer)
+    self.assertEqual(x.isLinear(), answer)
 
   def testIsAffine1(self):
     F = FField(2)
     x = FPolynom(F, [1, 1, 1, 0, 1, 0, 0, 0, 1])
     answer = True
-    self.assertEqual(x.IsAffine(), answer)
+    self.assertEqual(x.isAffine(), answer)
 
   def testIsAffine2(self):
     F = FField(4)
     x = FPolynom(F, [3, 1, 1, 0, 1, 0, 0, 2, 1])
     answer = False
-    self.assertEqual(x.IsAffine(), answer)
+    self.assertEqual(x.isAffine(), answer)
 
   def testRank1(self):
     F = FField(4)
     x = FPolynom(F, [3, 1, 1, 0, 1, 0, 0, 2, 1])
     answer = 6
-    self.assertEqual(x.Rank(), answer)
+    self.assertEqual(x.rank(), answer)
 
   def testReduce1(self):
     F = FField(2)
     f = FPolynom(F, [1, 1, 1, 1, 1])
-    f.Reduce()
+    f.reduce()
     answer = FPolynom(F,[1, 0, 1, 1])
     self.assertEqual(f, answer)
 
   def testReduce2(self):
     F = FField(4)
     f = FPolynom(F, [0, 0, 0, 0, 4, 13, 3, 7, 10, 13, 8, 5, 12, 4, 15, 1, 8, 14, 10, 11, 12, 11, 11, 0, 2, 9, 13, 0, 14, 0, 0, 0, 2])
-    f.Reduce()
+    f.reduce()
     answer = FPolynom(F, [0, 8, 12, 10, 15, 1, 8, 12, 10, 15, 1, 8, 12, 10, 15, 1])
     self.assertEqual(f, answer)
-
-  def testFromZhekalkinPolynom1(self):
-    F = FField(2)
-    f = BooleanFunction("0011")
-    zhekalkin = f.zhegalkinPolynom()
-    g = FromZhekalkinPolynom(F, zhekalkin.coeffs)
-    answer = FPolynom(F, [0, 1, 1])
-    self.assertEqual(g, answer)
-
-  def testFromZhekalkinPolynom2(self):
-    F = FField(2)
-    f = BooleanFunction("0001")
-    zhekalkin = f.zhegalkinPolynom()
-    g = FromZhekalkinPolynom(F, zhekalkin.coeffs)
-    answer = FPolynom(F, [0, 2, 3, 1])
-    self.assertEqual(g, answer)
-
-  def testFromZhekalkinPolynom3(self):
-    F = FField(2)
-    f = BooleanFunction("0110")
-    zhekalkin = f.zhegalkinPolynom()
-    g = FromZhekalkinPolynom(F, zhekalkin.coeffs)
-    answer = FPolynom(F, [0, 2, 3])
-    self.assertEqual(g, answer)
-
-  def testFromZhekalkinPolynom4(self):
-    F = FField(4)
-    f = BooleanFunction("0"*15 + "1")
-    zhekalkin = f.zhegalkinPolynom()
-    g = FromZhekalkinPolynom(F, zhekalkin.coeffs)
-    answer = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
-    self.assertEqual(g.Values(False), answer)
-
-  def testPow1(self):
-    F = FField(2)
-    x = PolynomPow(F, FPolynom(F, [0, 1, 1]), 2)
-    answer = FPolynom(F, [0, 0, 1, 0, 1])
-    self.assertEqual(x, answer)
-
-  def testPow2(self):
-    F = FField(2)
-    x = PolynomPow(F, FPolynom(F, []), 1)
-    answer = FPolynom(F, [])
-    self.assertEqual(x, answer)
-
-  def testPow3(self):
-    F = FField(2)
-    x = PolynomPow(F, FPolynom(F, []), 0)
-    answer = FPolynom(F, [1])
-    self.assertEqual(x, answer)
 
   def testFromPermutation1(self):
     F = FField(2)
     f = [1, 3, 0, 2] #t*x^2 + 1
     answer = FPolynom(F, [FElement(F, 1), FElement(F, 0), FElement(F, 2), FElement(F, 0)], True)
     pol = FPolynom(F, [])
-    pol.FromPermutation(f)
+    pol.fromPermutation(f)
     self.assertEqual(pol, answer)
 
   def testFromPermutation2(self):
@@ -243,7 +177,7 @@ class TestBoolean(unittest.TestCase):
     f = [1, 2, 2, 0] #x^3 + x^2 + x(t + 1) + 1
     answer = FPolynom(F, [1, 3, 1, 1])
     pol = FPolynom(F, [])
-    pol.FromPermutation(f)
+    pol.fromPermutation(f)
     self.assertEqual(pol, answer)
 
   def testFromPermutation3(self):
@@ -251,13 +185,14 @@ class TestBoolean(unittest.TestCase):
     f = [1, 1, 1, 1] 
     answer = f
     pol = FPolynom(F, [])
-    pol.FromPermutation(f)
-    self.assertEqual(pol.Values(False), answer)
+    pol.fromPermutation(f)
+    self.assertEqual(pol.values(False), answer)
 
   def testDeg(self):
     F = FField(2)
     f = [1, 3, 0, 2] #t*x^2 + 1
     answer = 2
     pol = FPolynom(F, [])
-    pol.FromPermutation(f)
-    self.assertEqual(pol.Deg(), answer)
+    pol.fromPermutation(f)
+    self.assertEqual(pol.deg(), answer)
+

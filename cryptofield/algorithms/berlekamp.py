@@ -26,7 +26,7 @@ def RandomTest():
 	for i in range(n):
 		print("i = ", i)
 		f = RandomFPolynom(F, deg)
-		ft = f.Copy()
+		ft = f.copy()
 		print("f = ", f)
 		k = Berlekamp(F, f)
 		y = FPolynom(F, [1])
@@ -59,7 +59,7 @@ def GCDSet(F, f, h):
 	for i in range(N):
 		c = FPolynom(F, [i])
 		g = PolynomEquilid(F, f, h - c)
-		if g.Deg() > 0:
+		if g.deg() > 0:
 			gcds.append(g)
 	return gcds
 
@@ -76,22 +76,22 @@ def PolynomPRoot(F, f):
 			t = Root(F, f.c[i])
 			f.c[i] = FElement(F, 0)
 			f.c[int (i / 2)] = t
-	f.Correct()
+	f.correct()
 	return f
 	
 	
 	
 def Berlekamp(F, polynom):
-	f = polynom.Copy()
+	f = polynom.copy()
 	factors = list()
-	if f.Deg() <= 1:
+	if f.deg() <= 1:
 		factors.append(f)
 		return factors
 
 	if not f.c[-1] == FElement(F, 1):
 		factors.append(FPolynom(F, [f.c[-1]], True))
-		f.Normalize()
-	d = f.Derivative()
+		f.normalize()
+	d = f.derivative()
 	gcd = PolynomEquilid(F, f, d)
 	if gcd == FPolynom(F, [1]):
 		decomp = Berl(F, f)
@@ -104,7 +104,7 @@ def Berlekamp(F, polynom):
 		while gcd == f:
 			f = PolynomPRoot(F, f)
 			k = k * 2
-			d = f.Derivative()
+			d = f.derivative()
 			gcd = PolynomEquilid(F, f, d)
 		decomp = Berl(F, f)
 		factors = factors + list(decomp) * k
@@ -118,7 +118,7 @@ def Berlekamp(F, polynom):
 		
 	
 def Berl(F, f):
-	n = f.Deg()
+	n = f.deg()
 	q = 2**F.n
 	I = FMatrix(F, n, n)
 	I.Ident()
