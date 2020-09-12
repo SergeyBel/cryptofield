@@ -5,52 +5,52 @@ import unittest
 class TestBoolean(unittest.TestCase):
   
   def testZhegalkin1(self):
-    f = "0011"
-    ans = "0010"
-    pol = boolean.ZhegalkinPolynom(f)
+    f = BooleanFunction("0011")
+    ans = ZhegalkinPolynom("0010")
+    pol = f.zhegalkinPolynom()
     self.assertEqual(ans, pol)
 
-  def TestZhegalkin2(self):
-    f = "11010011"
-    ans = "10111001"
-    pol = ZhegalkinPolynom(f)
+  def testZhegalkin2(self):
+    f = BooleanFunction("11010011")
+    ans = ZhegalkinPolynom("10111001")
+    pol = f.zhegalkinPolynom()
     self.assertEqual(ans, pol)
     
   def testWalshSpec1(self):
-    f = "1110"
-    self.assertEqual(WalshSpectrum(f, 2), [-2, -2, -2, 2])
+    f = BooleanFunction("1110")
+    self.assertEqual(f.walshSpectrum(), [-2, -2, -2, 2])
     
   def testNonlineartyBool1(self):
-    f = "0000010100110110"
-    self.assertEqual(NonlineartyBool(f), 6)
+    f = BooleanFunction("0000010100110110")
+    self.assertEqual(f.nonlinearty(), 6)
   
   def testIsLinearBoolFalse(self): 
-    f = "0000010100110110"
-    self.assertEqual(IsLinear(f, 4), False)
+    f = BooleanFunction("0000010100110110")
+    self.assertEqual(f.isLinear(), False)
   
   def testIsLinearBoolTrue(self):
-    f = "01101001"
-    self.assertEqual(IsLinear(f, 3), True)
+    f = BooleanFunction("01101001")
+    self.assertEqual(f.isLinear(), True)
   
   def testDegBool1(self):  
-    f = "11010011"
-    self.assertEqual(Deg(f), 3)
+    f = BooleanFunction("11010011")
+    self.assertEqual(f.deg(), 3)
   
   def testDegBool2(self):  
-    f = "0000010100110110"
-    self.assertEqual(Deg(f), 2)
+    f = BooleanFunction("0000010100110110")
+    self.assertEqual(f.deg(), 2)
 
   def testIsMonotoneTrue(self): 
-    f = "00010111"
-    self.assertEqual(IsMonotone(f), True)
+    f = BooleanFunction("00010111")
+    self.assertEqual(f.isMonotone(), True)
 
   def testIsMonotoneFalse(self):
-    f = "0110"
-    self.assertEqual(IsMonotone(f), False)
+    f = BooleanFunction("0110")
+    self.assertEqual(f.isMonotone(), False)
 
   def testIsMonotoneFalse2(self):
-    f = "1011"
-    self.assertEqual(IsMonotone(f), False)
+    f = BooleanFunction("1011")
+    self.assertEqual(f.isMonotone(), False)
 
 if __name__ == '__main__':
     unittest.main(self)

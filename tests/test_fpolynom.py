@@ -182,33 +182,33 @@ class TestBoolean(unittest.TestCase):
 
   def testFromZhekalkinPolynom1(self):
     F = FField(2)
-    f = "0011"
-    zhekalkin = ZhegalkinPolynom(f)
-    g = FromZhekalkinPolynom(F, zhekalkin)
+    f = BooleanFunction("0011")
+    zhekalkin = f.zhegalkinPolynom()
+    g = FromZhekalkinPolynom(F, zhekalkin.coeffs)
     answer = FPolynom(F, [0, 1, 1])
     self.assertEqual(g, answer)
 
   def testFromZhekalkinPolynom2(self):
     F = FField(2)
-    f = "0001"
-    zhekalkin = ZhegalkinPolynom(f)
-    g = FromZhekalkinPolynom(F, zhekalkin)
+    f = BooleanFunction("0001")
+    zhekalkin = f.zhegalkinPolynom()
+    g = FromZhekalkinPolynom(F, zhekalkin.coeffs)
     answer = FPolynom(F, [0, 2, 3, 1])
     self.assertEqual(g, answer)
 
   def testFromZhekalkinPolynom3(self):
     F = FField(2)
-    f = "0110"
-    zhekalkin = ZhegalkinPolynom(f)
-    g = FromZhekalkinPolynom(F, zhekalkin)
+    f = BooleanFunction("0110")
+    zhekalkin = f.zhegalkinPolynom()
+    g = FromZhekalkinPolynom(F, zhekalkin.coeffs)
     answer = FPolynom(F, [0, 2, 3])
     self.assertEqual(g, answer)
 
   def testFromZhekalkinPolynom4(self):
     F = FField(4)
-    f = "0"*15 + "1"
-    zhekalkin = ZhegalkinPolynom(f)
-    g = FromZhekalkinPolynom(F, zhekalkin)
+    f = BooleanFunction("0"*15 + "1")
+    zhekalkin = f.zhegalkinPolynom()
+    g = FromZhekalkinPolynom(F, zhekalkin.coeffs)
     answer = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
     self.assertEqual(g.Values(False), answer)
 
