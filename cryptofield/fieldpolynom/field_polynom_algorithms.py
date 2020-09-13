@@ -75,7 +75,7 @@ def NextLinearPolynom(F, f):
 	
 def NextAffinePolynom(F, f):
 	N = 2**F.n - 1
-	g = f.Copy()
+	g = f.copy()
 	c = g.c[0]
 	if c == FElement(F, N):
 		g.c[0] = FElement(F, 0)
@@ -105,10 +105,10 @@ def DualBasis(F):
 	for i in range(n):
 		for j in range(i + 1):
 			a[j, i] = a[i, j] = tr.value(FPow(F, alpha, i + j))
-	b = a.Inverse()
+	b = a.inverse()
 	for i in range(n):
 		num = "";
-		t = b.GetRow(i)
+		t = b.getRow(i)
 		for j in range(len(t)):
 			num += str(t[j].f)
 		dualBasis.append(FElement(F, binaryStrToValue(num[::-1])))
@@ -157,13 +157,5 @@ def IrreducibleProduct(F, n):
 			f /= g
 	return f
 
-def FPow(F, x, n):
-	p = FElement(F, 1)
-	while (n):
-		if (n & 1):
-			p *= x;
-			n -= 1
-		else:
-			x *= x;
-			n >>= 1;
-	return p
+
+

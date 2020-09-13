@@ -1,7 +1,6 @@
 from cryptofield.ffield import *
 from cryptofield.common import *
 from cryptofield.boolean import *
-from cryptofield.fieldfunc import *
 import itertools
 from random import randint
 
@@ -182,13 +181,19 @@ class FPolynom:
 			constants.append(FElement(self.field, i))
 
 		if (isFieldPerm == False):
-			perm = FuncToFieldFunc(self.field, perm)
+			perm = self.__funcToFieldFunc(perm)
 		
 		for i in range(1, n):
 			for j in range(n):
-				self.c[i]  += perm[j] * FieldPow(self.field, constants[j], n - i - 1)
+				self.c[i]  += perm[j] * FPow(self.field, constants[j], n - i - 1)
 		self.c[0] = perm[0];
 		self.correct()
+
+	def __funcToFieldFunc(self, f):
+		a = list()
+		for i in range(len(f)):
+			a.append(FElement(self.field, f[i]))
+		return a
 
 	def isLinear(self):
 		for i in range(len(self.c)):
