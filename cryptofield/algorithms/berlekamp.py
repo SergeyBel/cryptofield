@@ -121,16 +121,16 @@ def Berl(F, f):
 	n = f.deg()
 	q = 2**F.n
 	I = FMatrix(F, n, n)
-	I.Ident()
+	I.ident()
 	x = FPolynom(F, [0, 1])
 	
 	B = FMatrix(F, n, n)
 	for i in range(0, n):
 		y = PolynomPow(F, x, i * q) #bi = x^(iq) in GF(q)
 		y = y % f
-		B.SetRow(i, ExpendRow(F, y.c, n))
+		B.setRow(i, ExpendRow(F, y.c, n))
 	B = B - I
-	basis = B.KerBasis()
+	basis = B.kerBasis()
 	k = len(basis)
 	decomp = set()
 	decomp.add(f)
