@@ -1,4 +1,6 @@
 import math
+from cryptofield.ffield import *
+
 
 def valueToBinaryStr(value, length = False):
 	s = bin(value)[2:]
@@ -68,3 +70,13 @@ def mobius(n):
 	else:
 		return -1
 
+def FPow(F, x, n):
+	p = FElement(F, 1)
+	while (n):
+		if (n & 1):
+			p *= x;
+			n -= 1
+		else:
+			x *= x;
+			n >>= 1;
+	return p
