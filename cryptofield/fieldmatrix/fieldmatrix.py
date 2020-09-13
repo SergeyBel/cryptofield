@@ -27,8 +27,8 @@ class FMatrix:
 		self.matrix = self.__newMatrix(self.field, self.n, self.m)
 		
 		for i in range(self.n):
-			r = [FElement(self.field, 0)] * self.m
-			r[i] = FElement(self.field, 1)
+			r = [self.nullElement] * self.m
+			r[i] = self.oneElement
 			self.matrix.SetRow(i, r)
 			
 	def setRow(self, index, row):
@@ -37,21 +37,24 @@ class FMatrix:
 	def getRow(self, index):
 		return self.matrix.GetRow(index)
 		
-	def size (self):
+	def size(self):
 		return self.matrix.Size()
 		
 	def getColumn(self,c):
 		return self.matrix.GetColumn(c)
 
 	def transpose(self):
-		self.matrix.Transpose()
+		m = self.copy()
+		m.matrix.Transpose()
+		return m
+
 
 	def copy(self):
 		m = FMatrix(self.field, self.n, self.m)
 		m.matrix = self.matrix
 		return m
 		
-	def swapRows(self,i,j):
+	def swapRows(self, i, j):
 		self.matrix.SwapRows(i, j)
 		
 	def kerBasis(self):

@@ -19,17 +19,17 @@ class TestFMatrix(unittest.TestCase):
     ans = [FElement(F, 1), FElement(F, 0), FElement(F, 0), FElement(F, 0), FElement(F, 0)]
     self.assertEqual(r, ans)
 
-  def MatrixInverse():
+  def testMatrixInverse1(self):
     F = FField(2)
     m = FMatrix(F, 4, 4)
-    m.SetRow(0, [FElement(F, 0), FElement(F, 0), FElement(F, 0), FElement(F, 1)])
-    m.SetRow(1, [FElement(F, 0), FElement(F, 0), FElement(F, 1), FElement(F, 0)])
-    m.SetRow(2, [FElement(F, 0), FElement(F, 1), FElement(F, 0), FElement(F, 0)])
-    m.SetRow(3, [FElement(F, 1), FElement(F, 0), FElement(F, 0), FElement(F, 1)])
+    m.setRow(0, [FElement(F, 0), FElement(F, 0), FElement(F, 0), FElement(F, 1)])
+    m.setRow(1, [FElement(F, 0), FElement(F, 0), FElement(F, 1), FElement(F, 0)])
+    m.setRow(2, [FElement(F, 0), FElement(F, 1), FElement(F, 0), FElement(F, 0)])
+    m.setRow(3, [FElement(F, 1), FElement(F, 0), FElement(F, 0), FElement(F, 1)])
     inv = m.inverse()
     ans = FMatrix(F, 4, 4)
-    ans.SetRow(0, [FElement(F, 1), FElement(F, 0), FElement(F, 0), FElement(F, 1)])
-    ans.SetRow(1, [FElement(F, 0), FElement(F, 0), FElement(F, 1), FElement(F, 0)])
-    ans.SetRow(2, [FElement(F, 0), FElement(F, 1), FElement(F, 0), FElement(F, 0)])
-    ans.SetRow(3, [FElement(F, 1), FElement(F, 0), FElement(F, 0), FElement(F, 0)])
+    ans.setRow(0, [FElement(F, 1), FElement(F, 0), FElement(F, 0), FElement(F, 1)])
+    ans.setRow(1, [FElement(F, 0), FElement(F, 0), FElement(F, 1), FElement(F, 0)])
+    ans.setRow(2, [FElement(F, 0), FElement(F, 1), FElement(F, 0), FElement(F, 0)])
+    ans.setRow(3, [FElement(F, 1), FElement(F, 0), FElement(F, 0), FElement(F, 0)])
     self.assertEqual(inv, ans)

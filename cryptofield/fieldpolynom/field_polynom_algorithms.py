@@ -157,14 +157,5 @@ def IrreducibleProduct(F, n):
 			f /= g
 	return f
 
-def FPow(F, x, n):
-	p = FElement(F, 1)
-	while (n):
-		if (n & 1):
-			p *= x;
-			n -= 1
-		else:
-			x *= x;
-			n >>= 1;
-	return p
+
 

@@ -1,7 +1,6 @@
 from cryptofield.ffield import *
 from cryptofield.common import *
 from cryptofield.boolean import *
-from cryptofield.fieldfunc import *
 import itertools
 from random import randint
 
