@@ -19,7 +19,6 @@ class Permutation:
 		inv = Permutation([self.func.index(i) for i in range(self.length)])
 		return inv
 	
-	
 	def getCycles(self):
 		cycles = [0] * (self.length + 1)
 		flags = [False] * self.length
