@@ -1,4 +1,5 @@
 from cryptofield.fieldpolynom import *
+from cryptofield.algorithms.field_algorithms import *
 
 
 # functions for compatibility with GenericMatrix constructor
@@ -17,30 +18,6 @@ def DivAbstract(x, y):
 def EqAbstract(x, y):
 	return x == y	
 	
-
-	
-def RandomTest():
-	F = FField(4)
-	n = 1000
-	deg = 4
-	for i in range(n):
-		print("i = ", i)
-		f = RandomFPolynom(F, deg)
-		ft = f.copy()
-		print("f = ", f)
-		k = Berlekamp(F, f)
-		y = FPolynom(F, [1])
-		for t in k:
-			y = y * t
-		if not y == ft:
-			print("Error")
-			print("Factors")
-			for m in k:
-				print(m)
-			print("Y = ", y, y.c)
-			return
-		else:
-			print(len(k))
 			
 	
 
@@ -126,7 +103,7 @@ def Berl(F, f):
 	
 	B = FMatrix(F, n, n)
 	for i in range(0, n):
-		y = PolynomPow(F, x, i * q) #bi = x^(iq) in GF(q)
+		y = x ** (i * q) #bi = x^(iq) in GF(q)
 		y = y % f
 		B.setRow(i, ExpendRow(F, y.c, n))
 	B = B - I
