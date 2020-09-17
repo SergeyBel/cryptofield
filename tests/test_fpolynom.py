@@ -111,6 +111,30 @@ class TestFpolynom(unittest.TestCase):
     answer = c
     z = d % y
     self.assertEqual(z, answer)
+
+  def testPow1(self):
+    F = FField(2)
+    x = FPolynom(F, [1, 2, 2, 3])
+    n = 1
+    answer = x
+    z = x ** n
+    self.assertEqual(z, answer)
+
+  def testPow2(self):
+    F = FField(2)
+    x = FPolynom(F, [1, 2, 2, 3])
+    n = 0
+    answer = FPolynom(F, [1])
+    z = x ** n
+    self.assertEqual(z, answer)
+
+  def testPow3(self):
+    F = FField(2)
+    x = FPolynom(F, [1, 0, 1])
+    n = 2
+    answer = FPolynom(F, [1, 0, 0, 0, 1])
+    z = x ** n
+    self.assertEqual(z, answer)
     
   
   def testDerivative1(self):
