@@ -23,23 +23,6 @@ class TestFPolynomAlgorithms(unittest.TestCase):
     self.assertEqual(z, answer)
 
 
-  def testPow1(self):
-    F = FField(2)
-    x = PolynomPow(F, FPolynom(F, [0, 1, 1]), 2)
-    answer = FPolynom(F, [0, 0, 1, 0, 1])
-    self.assertEqual(x, answer)
-
-  def testPow2(self):
-    F = FField(2)
-    x = PolynomPow(F, FPolynom(F, []), 1)
-    answer = FPolynom(F, [])
-    self.assertEqual(x, answer)
-
-  def testPow3(self):
-    F = FField(2)
-    x = PolynomPow(F, FPolynom(F, []), 0)
-    answer = FPolynom(F, [1])
-    self.assertEqual(x, answer)
 
   def testBerlekamp1(self):
     F = FField(1)

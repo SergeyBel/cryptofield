@@ -22,6 +22,5 @@ print ('Derivative:', z.derivative())
 print ('Values for all x:', z.values())
 print ('Is linear:', z.isLinear())
 print ('Is affine:', z.isAffine())
-
-
-
+print ('Random polynom deg 10')
+print (FPolynom.random(F, 10))
