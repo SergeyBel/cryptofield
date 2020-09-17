@@ -74,6 +74,18 @@ class FPolynom:
 		(divisor, rest) = self.__polynomDiv(self.field, self.c, other.c)  # x % y
 		return FPolynom(self.field, rest, True)
 
+	def __pow__(self, n):
+		p = FPolynom(self.field, [1])
+		x = self.copy()
+		while (n):
+			if (n & 1):
+				p *= x;
+				n -= 1
+			else:
+				x *= x;
+				n >>= 1;
+		return p
+
 	def __polynomDiv(self, F, x, y):
 		degX = self.__degPolynom(F, x)
 		degY = self.__degPolynom(F, y)
@@ -224,6 +236,15 @@ class FPolynom:
 			self.c[j] += self.c[i]
 			self.c[i] = self.nullElement
 		self.correct()
+
+	@staticmethod
+	def random(F, n):
+		N = 2**F.n
+		coeffs = list()
+		for i in range(n):
+			coeffs.append(randint(0, N - 1))
+		coeffs.append(randint(1, N - 1))
+		return FPolynom(F, coeffs)
 
 	def __str__(self):
 		return self.__strPolynom(self.field, self.c)
