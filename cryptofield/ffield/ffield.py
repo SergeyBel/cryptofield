@@ -80,15 +80,15 @@ gPrimitivePolysCondensed = {
     100 : (100,15,0)
     }
 
-for n in list(gPrimitivePolysCondensed.keys()):
-    gPrimitivePolys[n] = [0]*(n+1)
-    if (n < 16):
+for keys in list(gPrimitivePolysCondensed.keys()):
+    gPrimitivePolys[keys] = [0]*(keys+1)
+    if (keys < 16):
         unity = 1
     else:
         unity = int(1)
-    for index in gPrimitivePolysCondensed[n]:
-        gPrimitivePolys[n][index] = unity
-    gPrimitivePolys[n].reverse()
+    for index in gPrimitivePolysCondensed[keys]:
+        gPrimitivePolys[keys][index] = unity
+    gPrimitivePolys[keys].reverse()
                 
 
 class FField:

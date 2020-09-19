@@ -2,20 +2,21 @@ import math
 from cryptofield.ffield import *
 
 
+
 def valueToBinaryStr(value, length = False):
   s = bin(value)[2:]
   if length != False:
     s  = "0" * (length - len(s)) + s
   return s
 
-def binaryStrToValue(str):
-  return int(str, 2)
+def binaryStrToValue(binaryInStr):
+  return int(binaryInStr, 2)
 
 def scalarBool(vec1, vec2):
-    s = 0
-    for i in range(0, len(vec1)):
-      s = s + ( (int(vec1[i]) & int(vec2[i])))
-    return s
+  s = 0
+  for i in range(0, len(vec1)):
+    s = s + ( (int(vec1[i]) & int(vec2[i])))
+  return s
 
 def nextBoolVec(vec):
   t = list(vec)
@@ -35,7 +36,7 @@ def swapArr(a, i, j):
   a[j] = c
 
 def isPowerTwo(n):
-  return n > 0 and not ((n & (n - 1)))
+  return n > 0 and not (n & (n - 1))
 
 def numberDivisors(n):
   divisors = []
@@ -74,9 +75,9 @@ def FPow(F, x, n):
   p = FElement(F, 1)
   while (n):
     if (n & 1):
-      p *= x;
+      p *= x
       n -= 1
     else:
-      x *= x;
-      n >>= 1;
+      x *= x
+      n >>= 1
   return p
