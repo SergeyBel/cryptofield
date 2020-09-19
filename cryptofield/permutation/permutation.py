@@ -18,11 +18,11 @@ class Permutation:
   def inversePermutation(self):
     inv = Permutation([self.func.index(i) for i in range(self.length)])
     return inv
-  
+
   def getCycles(self):
     cycles = [0] * (self.length + 1)
     flags = [False] * self.length
-    
+
     for i in range(self.length):
       if flags[i] == False:
         cycleLen = 1
@@ -49,33 +49,33 @@ class Permutation:
       k -= 1
 
     swapArr(perm, k, j)
-  
+
     left = j + 1
     right = n - 1
     while left < right:
       swapArr(perm, left, right)
       left += 1
       right -= 1
-  
-    return Permutation(perm)  
+
+    return Permutation(perm)
 
   def __str__(self):
     return str(self.func)
 
   def __eq__(self, other):
     return self.func == other.func
-  
+
   @staticmethod
-  def randomPermutation(max):
-    nums = list(i for i in range(max))
+  def randomPermutation(length):
+    nums = list(i for i in range(length))
     perm = list()
-    for i in range(max):
+    for i in range(length):
       j = randint(0, len(nums) - 1)
       perm.append(nums[j])
       del nums[j]
-    
+
     return Permutation(perm)
-  
+
 
 
 
