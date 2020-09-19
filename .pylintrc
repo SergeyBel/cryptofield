@@ -310,11 +310,11 @@ expected-line-ending-format=
 ignore-long-lines=^\s*(# )?<?https?://\S+>?$
 
 # Number of spaces of indent required inside a hanging or continued line.
-indent-after-paren=4
+indent-after-paren=2
 
 # String used as indentation unit. This is usually "    " (4 spaces) or "\t" (1
 # tab).
-indent-string='    '
+indent-string='  '
 
 # Maximum number of characters on a single line.
 max-line-length=100
@@ -579,6 +579,8 @@ known-third-party=enchant
 # Couples of modules and preferred modules, separated by a comma.
 preferred-modules=
 
+#Disable import warnings
+disable=W0401,W0142,W0403,W0232,R0903,F0401,W0614,C0111,C0301,C0103,C0325,C0121,C0200,R1705,W0612,R0201,R0913,E1101,W0201,R0902,R0904,W0108
 
 [EXCEPTIONS]
 
