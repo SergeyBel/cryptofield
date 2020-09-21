@@ -47,7 +47,7 @@ def DualBasis(F):
       a[j, i] = a[i, j] = tr.value(FPow(F, alpha, i + j))
   b = a.inverse()
   for i in range(n):
-    num = "";
+    num = ""
     t = b.getRow(i)
     for j in range(len(t)):
       num += str(t[j].f)
@@ -68,7 +68,7 @@ def FromZhekalkinPolynom(F, coeffs):
       decomp = list(valueToBinaryStr(i, n))
       for j in range(n):
         if decomp[j] == "1":
-          monom *= coords[j];
+          monom *= coords[j]
       f += monom
   f.reduce()
   return f
@@ -88,6 +88,3 @@ def IrreducibleProduct(F, n):
     elif m == -1:
       f /= g
   return f
-
-
-
