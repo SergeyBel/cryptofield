@@ -7,13 +7,13 @@ class ZhegalkinPolynom:
     self.n = len(coeffs)
 
   def deg(self):
-    max = 0
+    maximum = 0
     for i in range(self.n):
       if self.coeffs[i] == "1":
         k = (bin(i)[2:]).count("1")
-        if k > max:
-          max = k;
-    return max
+        if k > maximum:
+          maximum = k
+    return maximum
 
   def __str__(self):
     variablesNum = int(math.log(self.n, 2))
@@ -35,3 +35,4 @@ class ZhegalkinPolynom:
 
   def __eq__(self, other):
     return self.coeffs == other.coeffs
+    

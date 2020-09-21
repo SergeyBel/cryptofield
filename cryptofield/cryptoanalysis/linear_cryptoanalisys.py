@@ -1,5 +1,5 @@
-from boolean import *
-import math
+from cryptofield.common import *
+from cryptofield.boolean import *
 
 """
 Generate line of values function <lineX, X> XOR <lineY, Y> for all X,Y
@@ -11,13 +11,13 @@ def LinearLink(lineX, lineY):
     y = "0" * len(lineY)
     while y != "":
       func.append( (scalarBool(x, lineX) + scalarBool(y, lineY)) % 2)
-      y = NextBoolVec(y)
-    x = NextBoolVec(x)
+      y = nextBoolVec(y)
+    x = nextBoolVec(x)
   return func
   
 """
-Generate all linear equations between input and output of s-box: n->m
-links is a table with indexes X|Y from 0...0|0...0 to 1...1|1...1
+#Generate all linear equations between input and output of s-box: n->m
+#links is a table with indexes X|Y from 0...0|0...0 to 1...1|1...1
 """
 def GenerateLineLinks(n, m):
   links = list()
@@ -27,8 +27,8 @@ def GenerateLineLinks(n, m):
     lineY = "0" * m
     while lineY != "":
       links.append(LinearLink(lineX, lineY))
-      lineY = NextBoolVec(lineY)
-    lineX = NextBoolVec(lineX)
+      lineY = nextBoolVec(lineY)
+    lineX = nextBoolVec(lineX)
   return links
 
 """
@@ -41,11 +41,11 @@ def LinearApproximationTable(sBox, n, m, links):
   table = [0] * len(links)
   for i in range(0, N):
     #x = valueToBinaryStr(i, n) + valueToBinaryStr(sBox[i], m)  
-    #index = binaryStrToValue(x) #index = X|Y= line in links table
-    index = (i << m) ^ sBox[i]    #for speed
+    #lineIndex = binaryStrToValue(x) #lineIndex = X|Y= line in links table
+    lineIndex = (i << m) ^ sBox[i]    #for speed
     for j in range(0, len(links)):
       # if for equation j cell X|Y ==0, it means (i, sBox[i]) satisfy eq with number j
-      if links[j][index] == 0:    
+      if links[j][lineIndex] == 0:    
         table[j] = table[j] + 1
   b = 2**n / 2
   for i in range(0, len(table)):
@@ -77,12 +77,12 @@ def PrintLinearApproximationTable(table, n, m):
 
     
     
-def LinearApproximateMaximum(table, badIndexes = []):
-  max = 0
+def LinearApproximateMaximum(table, badIndexes):
+  maximum = 0
   for i in range(1, len(table)):    #because table[0] is always max, but no meaningful
-    if abs(table[i]) > max and i not in badIndexes:
-      max = table[i]
-  return max
+    if abs(table[i]) > maximum and i not in badIndexes:
+      maximum = table[i]
+  return maximum
   
   
 """
