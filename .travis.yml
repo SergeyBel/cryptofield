@@ -5,5 +5,5 @@ python:
 install:
   - pip install -r requirements.txt
 
-- stage: lint
-  script: pylint cryptofield
+script:
+  - pylint cryptofield
