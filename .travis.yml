@@ -5,8 +5,10 @@ python:
 install:
   - pip install -r requirements.txt
 
+before_script:
+  - export PYTHONPATH=$PYTHONPATH:$(pwd)
+
 script:
   - pylint cryptofield
   - python -m unittest tests
-  - set PYTHONPATH=.
   - for f in examples/*.py; do python "$f"; done
