@@ -1,8 +1,8 @@
+from random import randint
 from cryptofield.ffield import *
 from cryptofield.common import *
 from cryptofield.boolean import *
-import itertools
-from random import randint
+
 
 #polynom a_0+a_1*X+...+a_n-1*X^n = (a_0, a_1,...,a_n-1)
 
@@ -79,16 +79,16 @@ class FPolynom:
     x = self.copy()
     while (n):
       if (n & 1):
-        p *= x;
+        p *= x
         n -= 1
       else:
-        x *= x;
-        n >>= 1;
+        x *= x
+        n >>= 1
     return p
 
   def __polynomDiv(self, F, x, y):
-    degX = self.__degPolynom(F, x)
-    degY = self.__degPolynom(F, y)
+    degX = self.__degPolynom(x)
+    degY = self.__degPolynom(y)
 
     n = max(len(x) - len(y) + 1, 1)
     divisor = [self.nullElement] * n
@@ -101,7 +101,7 @@ class FPolynom:
       divisor = self.__polynomAdd(F, divisor, d)
       z = self.__polynomMul(F, y, d)
       g = self.__polynomSub(F, g, z)
-      degX = self.__degPolynom(F, g)
+      degX = self.__degPolynom(g)
     return (self.__polynomCorrect(F, divisor), self.__polynomCorrect(F, g))
     
   def __len__(self):
@@ -122,9 +122,9 @@ class FPolynom:
     return FPolynom(self.field, self.__polynomCorrect(self.field, self.c), True)
   
   def deg(self):
-    return self.__degPolynom(self.field, self.c)
+    return self.__degPolynom(self.c)
 
-  def __degPolynom(self, F, coeffs):
+  def __degPolynom(self, coeffs):
     i = len(coeffs) - 1
     while  i >= 0 and coeffs[i] == self.nullElement:
       i = i - 1
@@ -161,21 +161,21 @@ class FPolynom:
   def value(self, x, isField = True):
     v = self.nullElement
     for i in range(len(self.c)):
-      v = v + self.c[i] * self.__fPow(self.field, x, i)
+      v = v + self.c[i] * self.__fPow(x, i)
     if (isField == True):
       return v
     else:
       return v.f 
 
-  def __fPow(self, F, x, n):
+  def __fPow(self, x, n):
     p = self.oneElement
     while (n):
       if (n & 1):
-        p *= x;
+        p *= x
         n -= 1
       else:
-        x *= x;
-        n >>= 1;
+        x *= x
+        n >>= 1
     return p
     
   def values(self, isField = True):
@@ -198,7 +198,7 @@ class FPolynom:
     for i in range(1, n):
       for j in range(n):
         self.c[i]  += perm[j] * FPow(self.field, constants[j], n - i - 1)
-    self.c[0] = perm[0];
+    self.c[0] = perm[0]
     self.correct()
 
   def __funcToFieldFunc(self, f):
@@ -247,15 +247,15 @@ class FPolynom:
     return FPolynom(F, coeffs)
 
   def __str__(self):
-    return self.__strPolynom(self.field, self.c)
+    return self.__strPolynom(self.c)
   
   def texString(self):
-    return self.strPolynom(self.field, self.c, False, True)
+    return self.__strPolynom(self.c, False, True)
 
   
-  def __strPolynom(self, F, coeffs, polynom = False, isTex = False):
+  def __strPolynom(self, coeffs, polynom = False, isTex = False):
     s = ""
-    if (self.__degPolynom(F, coeffs) == -1):
+    if (self.__degPolynom(coeffs) == -1):
       return "0"
     n = len(coeffs) - 1
     first = True
@@ -291,18 +291,3 @@ class FPolynom:
       s = s + before + monom
 
     return s
-
-
-  
-
-  
-
-  
-
-
-
-  
-
-  
-
-
