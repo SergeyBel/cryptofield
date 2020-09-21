@@ -2,25 +2,6 @@ from cryptofield.fieldpolynom import *
 from cryptofield.algorithms.field_algorithms import *
 
 
-# functions for compatibility with GenericMatrix constructor
-def AddAbstract(x, y):
-  return x + y
-  
-def SubAbstract(x, y):
-  return x - y
-  
-def MulAbstract(x, y):
-  return x * y
-  
-def DivAbstract(x, y):
-  return x / y
-
-def EqAbstract(x, y):
-  return x == y 
-  
-      
-  
-
 # Expend row 0's for length n 
 def ExpendRow(F, row, n):
   m = n - len(row)
@@ -125,20 +106,3 @@ def Berl(F, f):
     i = i + 1
     decomp = tempDecomp
   return decomp
-
-"""
-G = FField(4)
-
-f = FPolynom(G, [11, 0, 1])
-x = Berlekamp(G, f)
-
-for t in x:
-  print t
-"""
-
-#RandomTest()
-
-
-
-
-

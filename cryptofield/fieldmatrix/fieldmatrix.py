@@ -20,8 +20,7 @@ class FMatrix:
   
   @staticmethod
   def __newMatrix(F, n, m):
-     return GenericMatrix((n, m), FElement(F, 0), FElement(F, 1), 
-             AddAbstract, SubAbstract, MulAbstract, DivAbstract, EqAbstract)
+    return GenericMatrix((n, m), FElement(F, 0), FElement(F, 1),  AddAbstract, SubAbstract, MulAbstract, DivAbstract, EqAbstract)
     
   def ident(self):
     self.matrix = self.__newMatrix(self.field, self.n, self.m)
@@ -31,11 +30,11 @@ class FMatrix:
       r[i] = self.oneElement
       self.matrix.SetRow(i, r)
       
-  def setRow(self, index, row):
-    self.matrix.SetRow(index, row)
+  def setRow(self, rowIndex, row):
+    self.matrix.SetRow(rowIndex, row)
   
-  def getRow(self, index):
-    return self.matrix.GetRow(index)
+  def getRow(self, rowIndex):
+    return self.matrix.GetRow(rowIndex)
     
   def size(self):
     return self.matrix.Size()
@@ -67,12 +66,12 @@ class FMatrix:
     return basis
 
   # Test row consists of all nulls
-  def isNullRow(self, index):
-    r = self.getRow(index)
+  def isNullRow(self, rowIndex):
+    r = self.getRow(rowIndex)
     for j in range(len(r)):
       if not (r[j] == self.nullElement):
         return False
-    return True;
+    return True
 
   def inverse(self):
     m = self.copy()

@@ -1,4 +1,5 @@
 from boolean import *
+from cryptofield.common import *
 
 def DifferentialTable(sBox, n, m):
   N = 2 ** n
@@ -33,18 +34,12 @@ def PrintDifferentialTable(table, n, m):
   print()
 
   
-def DecodeIndexAsDif(index, n, m):
-  val = valueToBinaryStr(index, n + m);
-  difX = int(val[:n], 2)
-  difY = int(val[n:], 2)
-  return hex(difX) + "->" + hex(difY)
-  
 def DifferentialMaximum(table):
-  max = 0
+  maximum = 0
   for i in range(1, len(table)):    #because table[0] is always max, but no meaningful
-    if table[i] > max:
-      max = table[i]
-  return max
+    if table[i] > maximum:
+      maximum = table[i]
+  return maximum
   
 def DiffElementIndexes(table, element):
   indexes = list()

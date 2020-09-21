@@ -65,16 +65,16 @@ class BooleanFunction:
   
   def __walshCoeff(self, u):
     #W_f(u) = Sum_(x in V_n)((-1) ^ (f(x) xor <x,u>)
-    sum = 0
+    summa = 0
     x = 0
     while x < self.N:
       p = int(self.vec[x]) ^ scalarBool(valueToBinaryStr(x, self.n), u)
       if p % 2 ==  0:
-        sum = sum + 1
+        summa = summa + 1
       else:
-        sum = sum - 1
+        summa = summa - 1
       x = x + 1
-    return sum
+    return summa
   
   def fourierSpectrum(self):
     res = list()
@@ -86,16 +86,16 @@ class BooleanFunction:
   
   def _fourierCoeff(self, u):
     #F_f(u) = Sum_(x in V_n)(f(x)(-1) ^ (<x,u>))
-    sum = 0
+    summa = 0
     x = 0
     while x < self.N:
       p = scalarBool(valueToBinaryStr(x, self.n), u)
       if p % 2 ==  0:
-        sum = sum + int(self.vec[x])
+        summa = summa + int(self.vec[x])
       else:
-        sum = sum - int(self.vec[x])
+        summa = summa - int(self.vec[x])
       x = x + 1
-    return sum
+    return summa
   
   
   #https://habrahabr.ru/post/275527/
