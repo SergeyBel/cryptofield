@@ -8,3 +8,4 @@ install:
 script:
   - pylint cryptofield
   - python -m unittest tests
+  - for f in examples/*.py; do python"$f"; done
