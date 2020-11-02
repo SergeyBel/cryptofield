@@ -26,7 +26,6 @@ detailed information on various topics:
 
 """
 
-import string
 import random
 import os
 import os.path
@@ -392,7 +391,7 @@ class FField:
         result = result + (' x^' + repr(i))
     if (1 & f):
       result = result + ' ' + repr(1)
-    return string.replace(string.strip(result),' ',' + ')
+    return str.replace(str.strip(result),' ',' + ')
 
   def GetRandomElement(self,nonZero=0,maxDegree=None):
     """
