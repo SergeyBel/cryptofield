@@ -2,43 +2,6 @@ from cryptofield.fieldpolynom import *
 from cryptofield.algorithms.field_algorithms import *
 
 
-# Expend row 0's for length n 
-def ExpendRow(F, row, n):
-  m = n - len(row)
-  for i in range(m):
-    row.append(FElement(F, 0))
-  return row
-    
-  
-# Get set of GCD(f, h-c) where c in Field   
-def GCDSet(F, f, h):
-  gcds = list()
-  N = 2**F.n
-  for i in range(N):
-    c = FPolynom(F, [i])
-    g = PolynomEquilid(F, f, h - c)
-    if g.deg() > 0:
-      gcds.append(g)
-  return gcds
-
-  
-def Root(F, a):
-  #2-root of a, x^2=a => x = a^(N/2)
-  N = 2**F.n
-  return FPow(F, a, int(N / 2))
-  
-
-def PolynomPRoot(F, f):
-  for i in range(len(f.c)):
-    if not f.c[i] == FElement(F, 0):
-      t = Root(F, f.c[i])
-      f.c[i] = FElement(F, 0)
-      f.c[int (i / 2)] = t
-  f.correct()
-  return f
-  
-  
-  
 def Berlekamp(F, polynom):
   f = polynom.copy()
   factors = list()
@@ -106,3 +69,39 @@ def Berl(F, f):
     i = i + 1
     decomp = tempDecomp
   return decomp
+
+
+# Expend row 0's for length n 
+def ExpendRow(F, row, n):
+  m = n - len(row)
+  for i in range(m):
+    row.append(FElement(F, 0))
+  return row
+    
+  
+# Get set of GCD(f, h-c) where c in Field   
+def GCDSet(F, f, h):
+  gcds = list()
+  N = 2**F.n
+  for i in range(N):
+    c = FPolynom(F, [i])
+    g = PolynomEquilid(F, f, h - c)
+    if g.deg() > 0:
+      gcds.append(g)
+  return gcds
+
+  
+def Root(F, a):
+  #2-root of a, x^2=a => x = a^(N/2)
+  N = 2**F.n
+  return FPow(F, a, int(N / 2))
+  
+
+def PolynomPRoot(F, f):
+  for i in range(len(f.c)):
+    if not f.c[i] == FElement(F, 0):
+      t = Root(F, f.c[i])
+      f.c[i] = FElement(F, 0)
+      f.c[int (i / 2)] = t
+  f.correct()
+  return f
