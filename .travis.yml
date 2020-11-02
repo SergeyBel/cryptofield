@@ -10,5 +10,6 @@ before_script:
 
 script:
   - pylint cryptofield
+  - pytype cryptofield
   - python -m unittest discover -s tests
   - for f in examples/*.py; do python "$f"; done

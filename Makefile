@@ -4,7 +4,10 @@ build:
 pylint:
 	docker run cryptofield pylint cryptofield
 
+pytype:
+	docker run cryptofield pytype cryptofield
+
 test:
 	docker run cryptofield python -m unittest discover -s tests
 
-check: build pylint test
+check: build pylint pytype test
