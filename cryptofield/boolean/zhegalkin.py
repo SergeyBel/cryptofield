@@ -1,7 +1,7 @@
 import math
 from cryptofield.common import *
 
-class ZhegalkinPolynom:
+class anf:
   def __init__(self, coeffs):
     self.coeffs = list(coeffs)
     self.n = len(coeffs)

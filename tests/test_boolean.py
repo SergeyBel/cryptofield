@@ -6,14 +6,14 @@ class TestBoolean(unittest.TestCase):
   
   def testZhegalkin1(self):
     f = BooleanFunction("0011")
-    ans = ZhegalkinPolynom("0010")
-    pol = f.zhegalkinPolynom()
+    ans = anf("0010")
+    pol = f.anf()
     self.assertEqual(ans, pol)
 
   def testZhegalkin2(self):
     f = BooleanFunction("11010011")
-    ans = ZhegalkinPolynom("10111001")
-    pol = f.zhegalkinPolynom()
+    ans = anf("10111001")
+    pol = f.anf()
     self.assertEqual(ans, pol)
     
   def testWalshSpec1(self):
