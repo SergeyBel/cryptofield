@@ -99,7 +99,7 @@ class BooleanFunction:
   
   
   #https://habrahabr.ru/post/275527/
-  def zhegalkinPolynom(self):
+  def anf(self):
     res = [self.vec[0]]
     func = self.vec
     while len(func) != 1:
@@ -108,11 +108,11 @@ class BooleanFunction:
         coefs.append(str((int(func[i]) ^ int(func[i + 1]))))
       res.append(coefs[0])
       func = coefs
-    return ZhegalkinPolynom(res)
+    return anf(res)
   
   
   def deg(self):
-    zh = self.zhegalkinPolynom()
+    zh = self.anf()
     return zh.deg()
 
 

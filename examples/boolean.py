@@ -2,9 +2,9 @@ from cryptofield.boolean import *
 
 vec = "1110"
 f = BooleanFunction(vec)
-print ('zhegalkin polynom:')
-print (f.zhegalkinPolynom())
-print ('zhegalkin deg:', f.deg())
+print ('ANF:')
+print (f.anf())
+print ('ANF deg:', f.deg())
 print ('is linear:', f.isLinear())
 print ('is monotone:', f.isMonotone())
 print ('walsh spetrum:')
